@@ -48,10 +48,10 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end; /* прижимаем содержимое к низу */
-      align-items: center;       /* центрируем по горизонтали */
+      justify-content: flex-end; /* кнопки внизу */
+      align-items: center;       /* по центру */
       box-sizing: border-box;
-      padding-bottom: 20px;      /* небольшой отступ снизу */
+      padding-bottom: 20px;
     }
 
     h2 {
@@ -65,7 +65,7 @@
 
     .btn-grid {
       display: grid;
-      /* 5 колонок равной ширины */
+      /* 5 колонок — ровно 5 кнопок в ряд */
       grid-template-columns: repeat(5, 1fr);
       gap: 8px;
       width: 100%;
@@ -77,15 +77,14 @@
       border: none;
       border-radius: 6px;
       
-      /* только изображение, без дополнительного фона */
       background-image: var(--btn-img);
       background-size: cover;
       background-position: center;
       
-      opacity: 0.75; /* прозрачность изображения 75% */
+      opacity: 0.75;
       
       color: var(--text-color);
-      font-size: 22px;
+      font-size: 26px; /* чуть крупнее текст на кнопке */
       font-weight: bold;
       cursor: pointer;
       touch-action: manipulation;
@@ -109,41 +108,63 @@
       display: none;
     }
 
+    /* Центрируем блок с воспоминанием по середине экрана */
     .content-box {
-      background: var(--card-bg);
+      background: transparent; /* убрали белый фон у контейнера */
       padding: 24px;
       border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-      text-align: center;
-      width: 100%;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      text-align: left;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: calc(100% - 40px);
       max-width: 400px;
+      background: var(--card-bg); /* если нужен лёгкий фон только у текста — можно оставить */
     }
 
     .mem-title {
       font-size: 22px;
       color: #1a1a1a;
       margin-bottom: 16px;
+      text-align: center;
     }
 
     #mem-text {
       line-height: 1.6;
       color: #222;
-      white-space: pre-wrap; /* сохраняет переносы строк из txt */
-      text-align: left;
+      white-space: pre-wrap;
     }
 
+    /* Кнопка «Назад» — только картинка, без фона */
     .back-btn {
       margin-top: 24px;
-      background-color: #e0e0e0;
-      color: #333;
       width: 100%;
-      border: none;
       padding: 14px;
+      border: none;
       border-radius: 8px;
       font-weight: bold;
+      cursor: pointer;
+      touch-action: manipulation;
+      user-select: none;
+      
+      /* Только изображение, как у остальных кнопок */
+      background-image: var(--btn-img);
+      background-size: cover;
+      background-position: center;
+      background-color: transparent;
+      
+      color: var(--text-color);
+      font-size: 20px;
+      font-weight: bold;
+      
+      transition: opacity 0.2s ease, transform 0.1s ease;
     }
+
     .back-btn:active {
-      background-color: #d0d0d0;
+      opacity: 0.6;
+      transform: scale(0.98);
     }
 
     .loading {
@@ -164,7 +185,7 @@
 
     <div id="memory-screen" class="hidden content-box">
       <h3 id="mem-title" class="mem-title"></h3>
-      <p id="mem-text" class="fade-text"></p>
+      <p id="mem-text"></p>
       <button id="back-btn" class="back-btn">Назад</button>
     </div>
   </div>
@@ -180,7 +201,7 @@
       const container = document.getElementById(containerId);
       for (let i = 1; i <= 10; i++) {
         const btn = document.createElement('button');
-        btn.textContent = String(i); // только цифра
+        btn.textContent = String(i);
         btn.addEventListener('touchstart', () => handleMemory(name, i), { passive: false });
         btn.addEventListener('click', () => handleMemory(name, i));
         container.appendChild(btn);
@@ -194,7 +215,6 @@
       memText.textContent = 'Загрузка...';
       memText.className = 'loading';
 
-      // Формируем URL для raw-файла на GitHub
       const url = `https://raw.githubusercontent.com/imIndieMax/Grail/main/Memory_Niav_${num}.txt`;
 
       try {
@@ -204,7 +224,7 @@
         }
         const text = await response.text();
         memText.textContent = text;
-        memText.className = ''; // убираем класс loading
+        memText.className = '';
       } catch (error) {
         console.error(error);
         memText.textContent = 'Не удалось загрузить текст. Проверьте наличие файла.';
