@@ -55,11 +55,9 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: start; /* Заголовок сверху */
       align-items: center;
       box-sizing: border-box;
       padding-top: 20px;
-      padding-bottom: 12px;
     }
 
     @media (min-width: 600px) {
@@ -78,17 +76,17 @@
       box-sizing: border-box;
     }
 
-    /* Контейнер кнопок — прижат к низу */
+    /* Блок кнопок: теперь он абсолютно прижат к низу экрана */
     .btn-grid-wrapper {
-      width: 100%;
-      max-width: 100%;
-      flex: 0 0 auto;
-      display: flex;
-      justify-content: center; /* Центрирование по горизонтали */
-      margin-top: auto;         /* Ключевое: прижимает блок к низу при flex-column */
-      padding: 8px;
-      box-sizing: border-box;
+      position: absolute;
+      bottom: 12px;       /* отступ от низа экрана */
+      left: 50%;
+      transform: translateX(-50%); /* центрирование по горизонтали */
+      width: 85vw;        /* ширина сетки */
+      max-width: 600px;    /* ограничение для больших экранов */
       z-index: 4;
+      padding: 4px;
+      box-sizing: border-box;
     }
 
     .btn-grid {
@@ -96,12 +94,8 @@
       grid-template-columns: repeat(5, 1fr);
       grid-template-rows: 1fr 1fr;
       gap: 10px;
-      /* Крупная сетка: 85% ширины, но с ограничением для больших экранов */
-      width: 85vw;
-      max-width: 600px;
-      aspect-ratio: 5 / 2;
-      padding: 4px;
-      box-sizing: border-box;
+      aspect-ratio: 5 / 2; /* пропорции под 2 ряда */
+      width: 100%;
     }
 
     button {
@@ -111,7 +105,7 @@
       opacity: 0.85;
       color: var(--text-color);
       font-family: "Times New Roman", Times, serif;
-      font-size: 52px; /* Ещё крупнее, чем раньше */
+      font-size: 52px; /* крупные цифры */
       font-weight: bold;
       cursor: pointer;
       touch-action: manipulation;
@@ -233,7 +227,7 @@
     <!-- Главный экран -->
     <div id="main-screen" class="screen">
       <h2>Ниав</h2>
-      <!-- Блок кнопок: margin-top:auto прижмёт его к низу -->
+      <!-- Блок кнопок теперь позиционируется абсолютно и всегда внизу -->
       <div class="btn-grid-wrapper">
         <div class="btn-grid" id="grid-niav"></div>
       </div>
