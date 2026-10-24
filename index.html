@@ -8,11 +8,9 @@
     :root {
       --bg-image: url('https://raw.githubusercontent.com/imIndieMax/Grail/refs/heads/main/Niav_Main.png');
       --overlay-bg: rgba(0, 0, 0, 0.45);
-      --btn-color: #3b5998;
-      --btn-hover: #2c4372;
       --text-color: #ffffff;
-      --card-bg: #ffffff;
       --section-title-color: #ffffff;
+      --card-bg: #ffffff;
     }
 
     body {
@@ -20,10 +18,11 @@
       padding: 0;
       font-family: Arial, sans-serif;
       min-height: 100vh;
-      overflow: hidden; /* чтобы не появлялись лишние скроллы при движении фона */
+      overflow: hidden;
       position: relative;
     }
 
+    /* Слой фона, который двигается по наклону */
     .bg-layer {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -31,8 +30,7 @@
       background-size: cover;
       background-position: center;
       z-index: 1;
-      transform-origin: center center;
-      will-change: transform; /* оптимизация производительности */
+      will-change: transform;
     }
 
     .bg-overlay {
@@ -66,29 +64,71 @@
 
     button {
       padding: 14px;
-      border: 2px solid rgba(255,255,255,0.3);
+      border: 2px solid rgba(255,255,255,0.25);
       border-radius: 8px;
-      background-color: var(--btn-color);
       color: var(--text-color);
       font-size: 16px;
       cursor: pointer;
       touch-action: manipulation;
       transition: all 0.2s ease;
       user-select: none;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Эффект мазка кистью (градиент + шум) */
+    button::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        rgba(255, 255, 255, 0.15),
+        rgba(255, 255, 255, 0.15) 4px,
+        rgba(0, 0, 0, 0.08) 4.5px,
+        rgba(0, 0, 0, 0.08) 8px
+      );
+      filter: blur(1.5px);
+      opacity: 0.75;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Цветной «мазок» под шумом */
+    button::after {
+      content: "";
+      position: absolute;
+      inset: 2px; /* отступ, чтобы граница оставалась видна */
+      background: linear-gradient(135deg, #5f6c9d 0%, #3b5998 50%, #2c4372 100%);
+      border-radius: 6px;
+      z-index: 1;
+      clip-path: polygon(
+        0 0,
+        100% 0,
+        100% 85%,
+        70% 100%,
+        0 100%
+      ); /* форма мазка */
+    }
+
+    button:active::after {
+      transform: scale(0.96);
+      clip-path: polygon(
+        5% 5%,
+        95% 5%,
+        95% 80%,
+        65% 95%,
+        5% 95%
+      );
     }
 
     button:active {
-      background-color: var(--btn-hover);
       transform: scale(0.98);
-      border-color: rgba(255,255,255,0.6);
+      border-color: rgba(255,255,255,0.5);
     }
 
-    .screen {
-      display: block;
-    }
-    .hidden {
-      display: none;
-    }
+    .screen { display: block; }
+    .hidden { display: none; }
 
     .content-box {
       background: var(--card-bg);
@@ -134,20 +174,16 @@
   </style>
 </head>
 <body>
-  <!-- Слой фона, который будет двигаться -->
+  <!-- Слой фона -->
   <div class="bg-layer" id="bgLayer"></div>
-
-  <!-- Затемнение поверх фона -->
   <div class="bg-overlay"></div>
 
   <div class="app-container">
-    <!-- Главный экран: только Ниав -->
     <div id="main-screen" class="screen">
       <h2>Ниав</h2>
       <div class="btn-grid" id="grid-niav"></div>
     </div>
 
-    <!-- Экран воспоминания -->
     <div id="memory-screen" class="hidden content-box">
       <h3 id="mem-title" class="mem-title"></h3>
       <p id="mem-text" class="fade-text"></p>
@@ -162,7 +198,6 @@
     const memText = document.getElementById('mem-text');
     const bgLayer = document.getElementById('bgLayer');
 
-    // Создаём 10 кнопок для Ниав
     function createGrid(containerId, name) {
       const container = document.getElementById(containerId);
       for (let i = 1; i <= 10; i++) {
@@ -183,7 +218,6 @@
       mainScreen.classList.add('hidden');
       memoryScreen.classList.remove('hidden');
 
-      // Перезапуск анимации появления текста
       memText.style.animation = 'none';
       void memText.offsetHeight;
       memText.style.animation = null;
@@ -199,15 +233,11 @@
     }
 
     // Движение фона по наклону телефона
-    let sensitivity = 15; // сила смещения — можно менять: меньше = слабее, больше = сильнее
+    let sensitivity = 15;
 
     window.addEventListener('deviceorientation', (event) => {
-      // event.gamma — наклон влево/вправо (от -90 до 90)
-      // event.beta — наклон вперёд/назад (от -180 до 180)
-
-      const moveX = event.gamma * (sensitivity / 90);  // горизонтальное смещение
-      const moveY = event.beta * (sensitivity / 180);  // вертикальное смещение
-
+      const moveX = event.gamma * (sensitivity / 90);
+      const moveY = event.beta * (sensitivity / 180);
       bgLayer.style.transform = `translate(${moveX}px, ${moveY}px)`;
     }, { passive: true });
   </script>
