@@ -1,48 +1,201 @@
-﻿<!DOCTYPE html>
-
-<!--
-     HTML code used with Epic Games HTML5 projects
-
-     much of this is for UE4 development purposes.
-
-     to create a custom HTML file for your project:
-     - make a copy of this file - or make one from scratch
-     - and put it in: "your project folder"/Build/HTML/GameX.html.template
--->
-
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-	<title>TaintedGrail_App</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Воспоминания</title>
+  <style>
+    :root {
+      --bg-image: url('https://i.pinimg.com/736x/12/31/e4/1231e45c08df402568094e9fee19c1c6.jpg');
+      --overlay-bg: rgba(0, 0, 0, 0.45); /* полупрозрачный чёрный вместо светлого */
+      --btn-color: #3b5998; /* более тёмный синий — лучше видно на пёстром фоне */
+      --btn-hover: #2c4372;
+      --text-color: #ffffff; /* белый текст на кнопках */
+      --card-bg: #ffffff;
+      --section-title-color: #ffffff;
+    }
 
-	<script src="https://code.jquery.com/jquery-2.1.3.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-image: var(--bg-image);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-	<link href="TaintedGrail_App.css" rel="stylesheet">
+    /* Лёгкое затемнение фона, но без pointer-events: none — чтобы не блокировать клики */
+    .bg-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--overlay-bg);
+      z-index: 1;
+    }
+
+    .app-container {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 480px;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    h2 {
+      color: var(--section-title-color);
+      text-align: center;
+      margin-bottom: 12px;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.6); /* тень для читаемости заголовка */
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    button {
+      padding: 14px;
+      border: 2px solid rgba(255,255,255,0.3); /* тонкая светлая рамка — сразу видно кнопку */
+      border-radius: 8px;
+      background-color: var(--btn-color);
+      color: var(--text-color);
+      font-size: 16px;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: all 0.2s ease;
+      user-select: none;
+    }
+
+    button:active {
+      background-color: var(--btn-hover);
+      transform: scale(0.98); /* лёгкое уменьшение при нажатии — понятная обратная связь */
+      border-color: rgba(255,255,255,0.6);
+    }
+
+    .screen {
+      display: block;
+    }
+    .hidden {
+      display: none;
+    }
+
+    .content-box {
+      background: var(--card-bg);
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      text-align: center;
+    }
+
+    .mem-title {
+      font-size: 22px;
+      color: #1a1a1a;
+      margin-bottom: 16px;
+    }
+
+    .fade-text {
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeIn 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      color: #222;
+      line-height: 1.6;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .back-btn {
+      margin-top: 24px;
+      background-color: #e0e0e0;
+      color: #333;
+      width: 100%;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+    }
+    .back-btn:active {
+      background-color: #d0d0d0;
+    }
+  </style>
 </head>
 <body>
+  <!-- Затемнение фона (теперь оно не ломает клики) -->
+  <div class="bg-overlay"></div>
 
-<div class="wrapper" id="mainarea">
-	<div class="alert alert-warning centered-axis-xy" style="min-height: 20px; display:none;" role="alert" id="compilingmessage">
-		<div id='loadTasks'> </div>
-	</div>
-	<!-- The "tabindex=0" specifier on the canvas is important to allow it to capture keyboard focus when clicking on it with a mouse -->
-	<canvas tabindex=0 id="canvas" class="emscripten" oncontextmenu="event.preventDefault()" style="display:none;">
-</div>
-<div class="row buttonarea text-center" id="buttonrow">
-	<div class="col-sm-2 text-center"></div>
-	<div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" onclick="try { Module['pauseMainLoop'](); } catch(e) {console.error(e);}">Pause</button></div>
-	<div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" onclick="try { Module['resumeMainLoop'](); } catch(e) {console.error(e);}">Resume</button></div>
-	<div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" onclick="var w = document.getElementById('logwindow'); w.style.display = w.style.display ? '' : 'none';">Toggle Log</button></div>
-	<div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" id='clear_indexeddb' onclick="try { deleteIndexedDBStorage(); } catch(e) {console.error(e);}">Clear IndexedDB</button></div>
-	<div class="col-sm-2 text-center"><button type="button" class="btn btn-primary" id="fullscreen_request">FullScreen</button></div>
-	<div class="col-sm-2 text-center"></div>
-	<div class="col-sm-2 text-center"></div>
-</div>
-<div class="texthalf text-normal jumbotron " id="logwindow" style='display:none'></div>
+  <div class="app-container">
 
-<script src="TaintedGrail_App.UE4.js"></script>
+    <!-- Главный экран -->
+    <div id="main-screen" class="screen">
+      <h2>Айлей</h2>
+      <div class="btn-grid" id="grid-ayley"></div>
+
+      <h2 style="margin-top: 30px;">Ниав</h2>
+      <div class="btn-grid" id="grid-niav"></div>
+
+      <h2 style="margin-top: 30px;">Червяк</h2>
+      <div class="btn-grid" id="grid-worm"></div>
+    </div>
+
+    <!-- Экран воспоминания -->
+    <div id="memory-screen" class="hidden content-box">
+      <h3 id="mem-title" class="mem-title"></h3>
+      <p id="mem-text" class="fade-text"></p>
+      <button id="back-btn" class="back-btn">Назад</button>
+    </div>
+
+  </div>
+
+  <script>
+    const mainScreen = document.getElementById('main-screen');
+    const memoryScreen = document.getElementById('memory-screen');
+    const memTitle = document.getElementById('mem-title');
+    const memText = document.getElementById('mem-text');
+
+    function createGrid(containerId, name) {
+      const container = document.getElementById(containerId);
+      for (let i = 1; i <= 10; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = `Воспоминание ${i}`;
+        btn.addEventListener('touchstart', () => handleMemory(name, i), { passive: false });
+        btn.addEventListener('click', () => handleMemory(name, i));
+        container.appendChild(btn);
+      }
+    }
+
+    createGrid('grid-ayley', 'Айлей');
+    createGrid('grid-niav', 'Ниав');
+    createGrid('grid-worm', 'Червяк');
+
+    function handleMemory(name, num) {
+      memTitle.textContent = `${name} — Воспоминание ${num}`;
+      memText.textContent = `Тут текст воспоминания ${num} для ${name}.`;
+
+      mainScreen.classList.add('hidden');
+      memoryScreen.classList.remove('hidden');
+
+      memText.style.animation = 'none';
+      void memText.offsetHeight;
+      memText.style.animation = null;
+    }
+
+    const backBtn = document.getElementById('back-btn');
+    backBtn.addEventListener('touchstart', goBack, { passive: false });
+    backBtn.addEventListener('click', goBack);
+
+    function goBack() {
+      memoryScreen.classList.add('hidden');
+      mainScreen.classList.remove('hidden');
+    }
+  </script>
 </body>
 </html>
