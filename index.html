@@ -8,6 +8,7 @@
     :root {
       --bg-image: url('https://raw.githubusercontent.com/imIndieMax/Grail/refs/heads/main/Niav_Main.png');
       --overlay-bg: rgba(0, 0, 0, 0.45);
+      --btn-bg: url('https://raw.githubusercontent.com/imIndieMax/Grail/refs/heads/main/Button_Number.png');
       --text-color: #ffffff;
       --section-title-color: #ffffff;
       --card-bg: #ffffff;
@@ -22,7 +23,6 @@
       position: relative;
     }
 
-    /* Слой фона, который двигается по наклону */
     .bg-layer {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -64,71 +64,33 @@
 
     button {
       padding: 14px;
-      border: 2px solid rgba(255,255,255,0.25);
+      border: none;
       border-radius: 8px;
+      background-image: var(--btn-bg);
+      background-size: cover;
+      background-position: center;
       color: var(--text-color);
-      font-size: 16px;
+      font-size: 20px;
+      font-weight: bold;
       cursor: pointer;
       touch-action: manipulation;
-      transition: all 0.2s ease;
+      transition: filter 0.2s ease;
       user-select: none;
-      position: relative;
-      overflow: hidden;
-    }
-
-    /* Эффект мазка кистью (градиент + шум) */
-    button::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: repeating-linear-gradient(
-        45deg,
-        rgba(255, 255, 255, 0.15),
-        rgba(255, 255, 255, 0.15) 4px,
-        rgba(0, 0, 0, 0.08) 4.5px,
-        rgba(0, 0, 0, 0.08) 8px
-      );
-      filter: blur(1.5px);
-      opacity: 0.75;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Цветной «мазок» под шумом */
-    button::after {
-      content: "";
-      position: absolute;
-      inset: 2px; /* отступ, чтобы граница оставалась видна */
-      background: linear-gradient(135deg, #5f6c9d 0%, #3b5998 50%, #2c4372 100%);
-      border-radius: 6px;
-      z-index: 1;
-      clip-path: polygon(
-        0 0,
-        100% 0,
-        100% 85%,
-        70% 100%,
-        0 100%
-      ); /* форма мазка */
-    }
-
-    button:active::after {
-      transform: scale(0.96);
-      clip-path: polygon(
-        5% 5%,
-        95% 5%,
-        95% 80%,
-        65% 95%,
-        5% 95%
-      );
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     button:active {
-      transform: scale(0.98);
-      border-color: rgba(255,255,255,0.5);
+      filter: brightness(0.85);
     }
 
-    .screen { display: block; }
-    .hidden { display: none; }
+    .screen {
+      display: block;
+    }
+    .hidden {
+      display: none;
+    }
 
     .content-box {
       background: var(--card-bg);
@@ -167,6 +129,7 @@
       border: none;
       padding: 14px;
       border-radius: 8px;
+      font-weight: bold;
     }
     .back-btn:active {
       background-color: #d0d0d0;
@@ -174,7 +137,6 @@
   </style>
 </head>
 <body>
-  <!-- Слой фона -->
   <div class="bg-layer" id="bgLayer"></div>
   <div class="bg-overlay"></div>
 
@@ -202,7 +164,7 @@
       const container = document.getElementById(containerId);
       for (let i = 1; i <= 10; i++) {
         const btn = document.createElement('button');
-        btn.textContent = `Воспоминание ${i}`;
+        btn.textContent = String(i); // только цифра
         btn.addEventListener('touchstart', () => handleMemory(name, i), { passive: false });
         btn.addEventListener('click', () => handleMemory(name, i));
         container.appendChild(btn);
@@ -218,6 +180,7 @@
       mainScreen.classList.add('hidden');
       memoryScreen.classList.remove('hidden');
 
+      // перезапуск анимации появления текста
       memText.style.animation = 'none';
       void memText.offsetHeight;
       memText.style.animation = null;
@@ -232,7 +195,6 @@
       mainScreen.classList.remove('hidden');
     }
 
-    // Движение фона по наклону телефона
     let sensitivity = 15;
 
     window.addEventListener('deviceorientation', (event) => {
