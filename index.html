@@ -6,10 +6,8 @@
   <title>Воспоминания: Ниав</title>
   <style>
     :root {
-      --overlay-bg: rgba(0, 0, 0, 0.45);
       --btn-img: url('https://raw.githubusercontent.com/imIndieMax/Grail/refs/heads/main/Button_Number.png');
       --text-color: #ffffff;
-      --section-title-color: #ffffff;
     }
 
     body {
@@ -21,51 +19,11 @@
       position: relative;
     }
 
-    /* --- Загрузочный экран --- */
-    #preloader {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: #000000;
-      z-index: 9999;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .preloader-text {
-      color: #D4AF37; /* золотой цвет */
-      font-size: 24px;
-      text-align: center;
-      font-weight: bold;
-      letter-spacing: 1px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-    }
-
-    .spinner {
-      width: 40px;
-      height: 40px;
-      border: 3px solid rgba(212, 175, 55, 0.3);
-      border-top-color: #D4AF37;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-top: 12px;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    /* ------------------------- */
-
     .video-bg-container {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       z-index: 1;
       overflow: hidden;
-      will-change: transform;
     }
 
     video {
@@ -80,11 +38,11 @@
       z-index: -1;
     }
 
-    /* Затемнение фона при показе текста — 40% */
+    /* Затенение фона на 25% */
     .dim-layer {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.40);
+      background: rgba(0, 0, 0, 0.25);
       z-index: 2;
       opacity: 0;
       transition: opacity 0.3s ease;
@@ -93,13 +51,6 @@
     .dim-layer.active {
       opacity: 1;
       pointer-events: auto;
-    }
-
-    .bg-overlay {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: var(--overlay-bg);
-      z-index: 3;
     }
 
     .app-container {
@@ -122,7 +73,7 @@
     }
 
     h2 {
-      color: var(--section-title-color);
+      color: var(--text-color);
       text-align: center;
       margin-bottom: 8px;
       text-shadow: 0 1px 2px rgba(0,0,0,0.6);
@@ -132,7 +83,6 @@
       font-weight: normal;
     }
 
-    /* Контейнер кнопок: отступ снизу 15% высоты экрана */
     .btn-grid-wrapper {
       position: absolute;
       bottom: 15%;
@@ -149,7 +99,7 @@
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       grid-template-rows: 1fr 1fr;
-      gap: 4px; /* уменьшено до 4px */
+      gap: 4px;
       aspect-ratio: 5 / 2;
       width: 100%;
     }
@@ -160,7 +110,7 @@
       border: none;
       opacity: 0.75;
       color: var(--text-color);
-      font-family: "Times New Roman", Times, serif;
+      font-family: inherit;
       font-size: 48px;
       font-weight: normal;
       cursor: pointer;
@@ -197,18 +147,18 @@
       max-height: calc(100vh - 80px);
       display: flex;
       flex-direction: column;
+      /* Скрытие полосы прокрутки */
       overflow-y: auto;
-      z-index: 6;
-      pointer-events: auto;
     }
-
+    
+    /* Кроссбраузерное скрытие скроллбара */
     .content-box::-webkit-scrollbar { display: none; }
     .content-box { scrollbar-width: none; -ms-overflow-style: none; }
 
     .mem-title {
-      font-family: "Times New Roman", Times, serif;
+      font-family: inherit;
       font-size: 27.5px;
-      color: #ffffff;
+      color: var(--text-color);
       margin-bottom: 16px;
       text-align: center;
       flex-shrink: 0;
@@ -217,15 +167,15 @@
 
     #mem-text {
       line-height: 1.6;
-      font-family: "Times New Roman", Times, serif;
-      font-size: 23.25px; /* увеличено примерно на 2px */
-      color: #ffffff;
+      font-family: inherit;
+      font-size: 23.25px;
+      color: var(--text-color);
       white-space: pre-wrap;
       overflow: visible;
       text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+      margin: 0;
     }
 
-    /* Кнопка «Уйти»: хитбокс строго по картинке */
     .back-trigger {
       display: inline-block;
       position: relative;
@@ -248,8 +198,8 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-family: "Times New Roman", Times, serif;
-      color: #ffffff;
+      font-family: inherit;
+      color: var(--text-color);
       font-size: 18px;
       font-weight: bold;
       text-align: center;
@@ -259,45 +209,28 @@
       text-shadow: 0 1px 2px rgba(0,0,0,0.8);
       white-space: nowrap;
     }
-
-    .loading { color: #cccccc; font-style: italic; }
   </style>
 </head>
 <body>
-  <!-- Загрузочный экран -->
-  <div id="preloader">
-    <div class="preloader-text">Проверка обновлений...</div>
-    <div class="spinner"></div>
-  </div>
-
-  <!-- Фоновое видео -->
   <div class="video-bg-container" id="bgLayer">
     <video id="bgVideo" autoplay muted loop playsinline>
       <source src="https://raw.githubusercontent.com/imIndieMax/Grail/main/dec45dbcfcf11f1a27d0613a8b8f09b.mp4" type="video/mp4">
     </video>
   </div>
 
-  <!-- Затемняющий слой (40%) -->
   <div class="dim-layer" id="dimLayer"></div>
 
-  <div class="bg-overlay"></div>
-
   <div class="app-container">
-    <!-- Главный экран -->
     <div id="main-screen" class="screen">
-      <!-- Заголовок ВНУТРИ контейнера кнопок — прямо над ними -->
       <div class="btn-grid-wrapper">
         <h2>Воспоминания Ниав</h2>
         <div class="btn-grid" id="grid-niav"></div>
       </div>
     </div>
 
-    <!-- Экран с воспоминанием -->
     <div id="memory-screen" class="hidden content-box">
       <h3 id="mem-title" class="mem-title"></h3>
       <p id="mem-text"></p>
-
-      <!-- Кнопка «Уйти» как картинка-клик -->
       <div class="back-trigger" id="back-trigger">
         <img src="https://raw.githubusercontent.com/imIndieMax/Grail/refs/heads/main/Button.png" alt="Уйти">
         <span class="back-label">Уйти.</span>
@@ -311,16 +244,10 @@
     const memTitle = document.getElementById('mem-title');
     const memText = document.getElementById('mem-text');
     const dimLayer = document.getElementById('dimLayer');
-    const bgLayer = document.getElementById('bgLayer');
-    const preloader = document.getElementById('preloader');
 
-    // --- Кнопки 1–10 ---
     function createGrid(containerId, name) {
       const container = document.getElementById(containerId);
-      if (!container) {
-        console.error('Контейнер для кнопок не найден!');
-        return;
-      }
+      if (!container) return;
       for (let i = 1; i <= 10; i++) {
         const btn = document.createElement('button');
         btn.textContent = String(i);
@@ -360,33 +287,12 @@
       memoryScreen.scrollTop = 0;
     }
 
-    const backTrigger = document.getElementById('back-trigger');
     function goBack() {
       memoryScreen.classList.add('hidden');
       mainScreen.classList.remove('hidden');
       dimLayer.classList.remove('active');
     }
-    backTrigger.addEventListener('click', goBack);
-
-    // --- Движение фона по наклону телефона ---
-    let sensitivity = 15;
-    window.addEventListener('deviceorientation', (event) => {
-      const moveX = event.gamma * (sensitivity / 90);
-      const moveY = event.beta * (sensitivity / 180);
-      bgLayer.style.transform = `translate(${moveX}px, ${moveY}px)`;
-    }, { passive: true });
-
-    // Скрываем прелоадер после загрузки DOM
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        preloader.style.opacity = '0';
-        preloader.style.pointerEvents = 'none';
-        // Небольшая задержка, чтобы анимация исчезновения успела проиграться
-        setTimeout(() => {
-          preloader.style.display = 'none';
-        }, 300);
-      }, 800); // можно менять: меньше — быстрее пропадает, больше — дольше висит
-    });
+    document.getElementById('back-trigger').addEventListener('click', goBack);
   </script>
 </body>
 </html>
