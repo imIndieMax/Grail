@@ -63,18 +63,14 @@
     }
 
     button {
-      aspect-ratio: 1 / 1; /* квадратная кнопка */
+      aspect-ratio: 1 / 1;
       padding: 0;
       border: none;
       border-radius: 8px;
-      
-      /* только изображение, без дополнительного фона */
       background-image: var(--btn-img);
       background-size: cover;
       background-position: center;
-      
-      opacity: 0.75; /* прозрачность изображения 75% */
-      
+      opacity: 0.75;
       color: var(--text-color);
       font-size: 24px;
       font-weight: bold;
@@ -85,7 +81,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: transparent; /* явная прозрачность цвета фона */
+      background-color: transparent;
     }
 
     button:active {
@@ -114,19 +110,11 @@
       margin-bottom: 16px;
     }
 
-    .fade-text {
-      opacity: 0;
-      transform: translateY(10px);
-      animation: fadeIn 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-      color: #222;
+    #mem-text {
       line-height: 1.6;
-    }
-
-    @keyframes fadeIn {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      color: #222;
+      white-space: pre-wrap; /* сохраняет переносы строк из txt */
+      text-align: left;
     }
 
     .back-btn {
@@ -141,6 +129,11 @@
     }
     .back-btn:active {
       background-color: #d0d0d0;
+    }
+
+    .loading {
+      color: #666;
+      font-style: italic;
     }
   </style>
 </head>
@@ -181,17 +174,30 @@
 
     createGrid('grid-niav', 'Ниав');
 
-    function handleMemory(name, num) {
+    async function handleMemory(name, num) {
       memTitle.textContent = `${name} — Воспоминание ${num}`;
-      memText.textContent = `Тут текст воспоминания ${num} для ${name}.`;
+      memText.textContent = 'Загрузка...';
+      memText.className = 'loading';
+
+      // Формируем URL для raw-файла на GitHub
+      const url = `https://raw.githubusercontent.com/imIndieMax/Grail/main/Memory_Niav_${num}.txt`;
+
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error('Файл не найден');
+        }
+        const text = await response.text();
+        memText.textContent = text;
+        memText.className = ''; // убираем класс loading
+      } catch (error) {
+        console.error(error);
+        memText.textContent = 'Не удалось загрузить текст. Проверьте наличие файла.';
+        memText.className = 'loading';
+      }
 
       mainScreen.classList.add('hidden');
       memoryScreen.classList.remove('hidden');
-
-      // перезапуск анимации появления текста
-      memText.style.animation = 'none';
-      void memText.offsetHeight;
-      memText.style.animation = null;
     }
 
     const backBtn = document.getElementById('back-btn');
