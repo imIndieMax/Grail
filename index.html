@@ -21,6 +21,7 @@
       position: relative;
     }
 
+    /* Фоновый контейнер */
     .video-bg-container {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -48,6 +49,7 @@
       z-index: 2;
     }
 
+    /* Основной контейнер приложения */
     .app-container {
       position: relative;
       z-index: 3;
@@ -55,15 +57,17 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
+      justify-content: space-between; /* Разносит заголовок и кнопки по вертикали */
       align-items: center;
       box-sizing: border-box;
+      padding-top: 20px;
       padding-bottom: 12px;
     }
 
     @media (min-width: 600px) {
       .app-container {
         max-width: 600px;
+        margin: 0 auto;
       }
     }
 
@@ -76,26 +80,34 @@
       box-sizing: border-box;
     }
 
-    .btn-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 6px;
+    /* Контейнер кнопок — на всю ширину, внизу */
+    .btn-grid-wrapper {
       width: 100%;
       max-width: 100%;
-      aspect-ratio: 5 / 2;
-      max-height: 60vh;
-      position: relative;
+      flex: 0 0 auto; /* Не сжимать блок с кнопками */
       z-index: 4;
     }
 
+    .btn-grid {
+      display: grid;
+      /* Два ряда по 5 колонок */
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: 1fr 1fr;
+      gap: 8px;
+      width: 100%;
+      aspect-ratio: 5 / 2; /* Пропорции сетки под 2 ряда */
+      padding: 4px;
+      box-sizing: border-box;
+    }
+
     button {
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 1 / 1; /* Квадратные кнопки */
       padding: 0;
       border: none;
-      opacity: 0.75;
+      opacity: 0.85;
       color: var(--text-color);
       font-family: "Times New Roman", Times, serif;
-      font-size: 42px;
+      font-size: 38px; /* Чуть уменьшил для двух рядов, чтобы не наезжали */
       font-weight: bold;
       cursor: pointer;
       touch-action: manipulation;
@@ -111,13 +123,14 @@
     }
 
     button:active {
-      opacity: 0.6;
-      transform: scale(0.98);
+      opacity: 0.65;
+      transform: scale(0.96);
     }
 
     .screen { display: block; }
     .hidden { display: none !important; }
 
+    /* Экран воспоминания */
     .content-box {
       background: transparent;
       padding: 24px;
@@ -217,7 +230,10 @@
     <!-- Главный экран -->
     <div id="main-screen" class="screen">
       <h2>Ниав</h2>
-      <div class="btn-grid" id="grid-niav"></div>
+      <!-- Обертка для сетки кнопок -->
+      <div class="btn-grid-wrapper">
+        <div class="btn-grid" id="grid-niav"></div>
+      </div>
     </div>
 
     <!-- Экран с воспоминанием -->
@@ -239,7 +255,7 @@
     const memText = document.getElementById('mem-text');
     const bgLayer = document.getElementById('bgLayer');
 
-    // --- Кнопки 1–10 ---
+    // --- Кнопки 1–10 (функционал без изменений) ---
     function createGrid(containerId, name) {
       const container = document.getElementById(containerId);
       if (!container) {
