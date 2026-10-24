@@ -85,11 +85,12 @@
     h2 {
       color: var(--section-title-color);
       text-align: center;
-      margin-bottom: 8px; /* небольшой отступ над кнопками */
+      margin-bottom: 8px;
       text-shadow: 0 1px 2px rgba(0,0,0,0.6);
       width: 100%;
       box-sizing: border-box;
-      font-size: 28px;
+      font-size: 30px; /* увеличено на 2px от предыдущего 28px */
+      font-weight: normal; /* не жирный */
     }
 
     /* Контейнер кнопок: отступ снизу 15% высоты экрана */
@@ -109,7 +110,7 @@
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       grid-template-rows: 1fr 1fr;
-      gap: 10px;
+      gap: 4px; /* уменьшено до 4px */
       aspect-ratio: 5 / 2;
       width: 100%;
     }
@@ -178,34 +179,23 @@
     #mem-text {
       line-height: 1.6;
       font-family: "Times New Roman", Times, serif;
-      font-size: 21.25px;
+      font-size: 23.25px; /* увеличено примерно на 2px от 21.25px */
       color: #ffffff;
       white-space: pre-wrap;
       overflow: visible;
       text-shadow: 0 1px 2px rgba(0,0,0,0.8);
     }
 
-    /* Кнопка «Уйти» — компактный хитбокс строго по картинке */
-    .back-btn {
-      margin-top: 16px;
-      padding: 0;
-      border: none;
-      background: none;
-      cursor: pointer;
-      touch-action: manipulation;
-      user-select: none;
+    /* Кнопка «Уйти»: хитбокс строго по картинке */
+    .back-trigger {
       display: inline-block;
       position: relative;
-      vertical-align: middle;
-      width: auto;
-      height: auto;
+      margin-top: 16px;
+      cursor: pointer;
+      touch-action: manipulation;
     }
 
-    .back-btn:active {
-      transform: scale(0.98);
-    }
-
-    .back-btn img {
+    .back-trigger img {
       display: block;
       width: auto;
       height: auto;
@@ -214,7 +204,6 @@
       vertical-align: top;
     }
 
-    /* Текст «Уйти.» — поверх картинки, всегда видимый */
     .back-label {
       position: absolute;
       top: 50%;
@@ -251,7 +240,7 @@
   <div class="app-container">
     <!-- Главный экран -->
     <div id="main-screen" class="screen">
-      <!-- Контейнер с кнопками и заголовком ВНУТРИ него, чтобы заголовок был прямо над кнопками -->
+      <!-- Заголовок ВНУТРИ контейнера кнопок — прямо над ними -->
       <div class="btn-grid-wrapper">
         <h2>Воспоминания Ниав</h2>
         <div class="btn-grid" id="grid-niav"></div>
@@ -263,10 +252,11 @@
       <h3 id="mem-title" class="mem-title"></h3>
       <p id="mem-text"></p>
 
-      <button id="back-btn" class="back-btn" aria-label="Уйти">
-        <img src="https://raw.githubusercontent.com/imIndieMax/Grail/refs/heads/main/Button.png" alt="">
+      <!-- Кнопка «Уйти» как картинка-клик -->
+      <div class="back-trigger" id="back-trigger">
+        <img src="https://raw.githubusercontent.com/imIndieMax/Grail/refs/heads/main/Button.png" alt="Уйти">
         <span class="back-label">Уйти.</span>
-      </button>
+      </div>
     </div>
   </div>
 
@@ -324,13 +314,13 @@
       memoryScreen.scrollTop = 0;
     }
 
-    const backBtn = document.getElementById('back-btn');
+    const backTrigger = document.getElementById('back-trigger');
     function goBack() {
       memoryScreen.classList.add('hidden');
       mainScreen.classList.remove('hidden');
       dimLayer.classList.remove('active');
     }
-    backBtn.addEventListener('click', goBack);
+    backTrigger.addEventListener('click', goBack);
 
     // --- Движение фона по наклону телефона ---
     let sensitivity = 15;
