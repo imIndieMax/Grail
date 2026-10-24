@@ -38,14 +38,14 @@
       z-index: -1;
     }
 
-    /* Затенение фона на 25% */
+    /* Затенение фона на 50% при переходе к тексту */
     .dim-layer {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.25);
+      background: rgba(0, 0, 0, 0.75);
       z-index: 2;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: opacity 1s ease;
       pointer-events: none;
     }
     .dim-layer.active {
@@ -147,28 +147,26 @@
       max-height: calc(100vh - 80px);
       display: flex;
       flex-direction: column;
-      /* Скрытие полосы прокрутки */
       overflow-y: auto;
     }
-    
-    /* Кроссбраузерное скрытие скроллбара */
+
     .content-box::-webkit-scrollbar { display: none; }
     .content-box { scrollbar-width: none; -ms-overflow-style: none; }
 
     .mem-title {
       font-family: inherit;
-      font-size: 27.5px;
+      font-size: 28px;
       color: var(--text-color);
-      margin-bottom: 16px;
+      margin-bottom: 100px; /* расстояние между заголовком и текстом — 100px */
       text-align: center;
       flex-shrink: 0;
       text-shadow: 0 1px 3px rgba(0,0,0,0.8);
     }
 
     #mem-text {
-      line-height: 1.6;
+      /*line-height: 1.4;*/
       font-family: inherit;
-      font-size: 23.25px;
+      font-size: 22px;
       color: var(--text-color);
       white-space: pre-wrap;
       overflow: visible;
@@ -265,20 +263,16 @@
     async function handleMemory(name, num) {
       memTitle.textContent = `${name} — Воспоминание ${num}`;
       memText.textContent = 'Загрузка...';
-      memText.className = 'loading';
 
       const url = `https://raw.githubusercontent.com/imIndieMax/Grail/main/Memory_Niav_${num}.txt`;
 
       try {
         const response = await fetch(url);
         if (!response.ok) throw new Error('Файл не найден');
-        const text = await response.text();
-        memText.textContent = text;
-        memText.className = '';
+        memText.textContent = await response.text();
       } catch (error) {
         console.error(error);
         memText.textContent = 'Не удалось загрузить текст. Проверьте наличие файла.';
-        memText.className = 'loading';
       }
 
       mainScreen.classList.add('hidden');
