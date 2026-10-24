@@ -58,18 +58,17 @@
 
     .btn-grid {
       display: grid;
-      /* 2 колонки по 1fr — кнопки будут квадратными за счёт aspect-ratio */
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
     }
 
     button {
-      aspect-ratio: 1 / 1; /* делает кнопку квадратной */
+      aspect-ratio: 1 / 1; /* квадратная кнопка */
       padding: 0;
       border: none;
       border-radius: 8px;
       
-      /* фон — только картинка, без заливки */
+      /* только изображение, без дополнительного фона */
       background-image: var(--btn-img);
       background-size: cover;
       background-position: center;
@@ -86,6 +85,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      background-color: transparent; /* явная прозрачность цвета фона */
     }
 
     button:active {
