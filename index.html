@@ -19,26 +19,32 @@
       margin: 0;
       padding: 0;
       font-family: Arial, sans-serif;
+      min-height: 100vh;
+      overflow: hidden; /* чтобы не появлялись лишние скроллы при движении фона */
+      position: relative;
+    }
+
+    .bg-layer {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
       background-image: var(--bg-image);
       background-size: cover;
       background-position: center;
-      background-attachment: fixed;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      z-index: 1;
+      transform-origin: center center;
+      will-change: transform; /* оптимизация производительности */
     }
 
     .bg-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: var(--overlay-bg);
-      z-index: 1;
+      z-index: 2;
     }
 
     .app-container {
       position: relative;
-      z-index: 2;
+      z-index: 3;
       width: 100%;
       max-width: 480px;
       padding: 20px;
@@ -128,10 +134,13 @@
   </style>
 </head>
 <body>
+  <!-- Слой фона, который будет двигаться -->
+  <div class="bg-layer" id="bgLayer"></div>
+
+  <!-- Затемнение поверх фона -->
   <div class="bg-overlay"></div>
 
   <div class="app-container">
-
     <!-- Главный экран: только Ниав -->
     <div id="main-screen" class="screen">
       <h2>Ниав</h2>
@@ -144,7 +153,6 @@
       <p id="mem-text" class="fade-text"></p>
       <button id="back-btn" class="back-btn">Назад</button>
     </div>
-
   </div>
 
   <script>
@@ -152,6 +160,7 @@
     const memoryScreen = document.getElementById('memory-screen');
     const memTitle = document.getElementById('mem-title');
     const memText = document.getElementById('mem-text');
+    const bgLayer = document.getElementById('bgLayer');
 
     // Создаём 10 кнопок для Ниав
     function createGrid(containerId, name) {
@@ -188,6 +197,19 @@
       memoryScreen.classList.add('hidden');
       mainScreen.classList.remove('hidden');
     }
+
+    // Движение фона по наклону телефона
+    let sensitivity = 15; // сила смещения — можно менять: меньше = слабее, больше = сильнее
+
+    window.addEventListener('deviceorientation', (event) => {
+      // event.gamma — наклон влево/вправо (от -90 до 90)
+      // event.beta — наклон вперёд/назад (от -180 до 180)
+
+      const moveX = event.gamma * (sensitivity / 90);  // горизонтальное смещение
+      const moveY = event.beta * (sensitivity / 180);  // вертикальное смещение
+
+      bgLayer.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    }, { passive: true });
   </script>
 </body>
 </html>
