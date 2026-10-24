@@ -55,7 +55,7 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: start; /* Заголовок сверху */
       align-items: center;
       box-sizing: border-box;
       padding-top: 20px;
@@ -78,13 +78,14 @@
       box-sizing: border-box;
     }
 
-    /* Контейнер кнопок — на всю ширину, центрирован */
+    /* Контейнер кнопок — прижат к низу */
     .btn-grid-wrapper {
       width: 100%;
       max-width: 100%;
       flex: 0 0 auto;
       display: flex;
-      justify-content: center; /* Гарантирует центрирование по горизонтали */
+      justify-content: center; /* Центрирование по горизонтали */
+      margin-top: auto;         /* Ключевое: прижимает блок к низу при flex-column */
       padding: 8px;
       box-sizing: border-box;
       z-index: 4;
@@ -95,10 +96,10 @@
       grid-template-columns: repeat(5, 1fr);
       grid-template-rows: 1fr 1fr;
       gap: 10px;
-      /* Увеличили размер сетки — кнопки станут крупнее */
-      width: 90vw;           /* 90% ширины экрана — чтобы по краям был небольшой отступ */
-      max-width: 600px;      /* Ограничение для больших экранов */
-      aspect-ratio: 5 / 2;   /* Пропорции под 2 ряда */
+      /* Крупная сетка: 85% ширины, но с ограничением для больших экранов */
+      width: 85vw;
+      max-width: 600px;
+      aspect-ratio: 5 / 2;
       padding: 4px;
       box-sizing: border-box;
     }
@@ -110,8 +111,7 @@
       opacity: 0.85;
       color: var(--text-color);
       font-family: "Times New Roman", Times, serif;
-      /* Размер шрифта увеличен — кнопки выглядят крупнее */
-      font-size: 48px;       
+      font-size: 52px; /* Ещё крупнее, чем раньше */
       font-weight: bold;
       cursor: pointer;
       touch-action: manipulation;
@@ -233,7 +233,7 @@
     <!-- Главный экран -->
     <div id="main-screen" class="screen">
       <h2>Ниав</h2>
-      <!-- Обертка с явным центрированием -->
+      <!-- Блок кнопок: margin-top:auto прижмёт его к низу -->
       <div class="btn-grid-wrapper">
         <div class="btn-grid" id="grid-niav"></div>
       </div>
