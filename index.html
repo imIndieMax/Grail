@@ -48,10 +48,10 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end; /* кнопки внизу */
+      justify-content: flex-end; /* прижимаем кнопки к низу */
       align-items: center;       /* по центру */
       box-sizing: border-box;
-      padding-bottom: 20px;
+      padding-bottom: 20px;     /* отступ снизу, чтобы не прилипали к краю */
     }
 
     h2 {
@@ -65,14 +65,15 @@
 
     .btn-grid {
       display: grid;
-      /* 5 колонок — ровно 5 кнопок в ряд */
+      /* 5 колонок — ровно 5 кнопок в ряд, растягиваются на всю ширину */
       grid-template-columns: repeat(5, 1fr);
       gap: 8px;
       width: 100%;
     }
 
     button {
-      aspect-ratio: 1 / 1; /* квадратная кнопка */
+      /* Квадратные кнопки, которые растягиваются по ширине колонки */
+      aspect-ratio: 1 / 1;
       padding: 0;
       border: none;
       border-radius: 6px;
@@ -84,7 +85,7 @@
       opacity: 0.75;
       
       color: var(--text-color);
-      font-size: 26px; /* чуть крупнее текст на кнопке */
+      font-size: 28px; /* крупный текст на кнопке */
       font-weight: bold;
       cursor: pointer;
       touch-action: manipulation;
@@ -108,9 +109,9 @@
       display: none;
     }
 
-    /* Центрируем блок с воспоминанием по середине экрана */
+    /* Блок с воспоминанием — по центру экрана */
     .content-box {
-      background: transparent; /* убрали белый фон у контейнера */
+      background: transparent;
       padding: 24px;
       border-radius: 12px;
       box-shadow: 0 4px 16px rgba(0,0,0,0.3);
@@ -121,7 +122,7 @@
       transform: translate(-50%, -50%);
       width: calc(100% - 40px);
       max-width: 400px;
-      background: var(--card-bg); /* если нужен лёгкий фон только у текста — можно оставить */
+      background: var(--card-bg); /* белый фон только у текстового блока */
     }
 
     .mem-title {
@@ -137,7 +138,7 @@
       white-space: pre-wrap;
     }
 
-    /* Кнопка «Назад» — только картинка, без фона */
+    /* Кнопка «Назад» — только картинка, без фона, крупная */
     .back-btn {
       margin-top: 24px;
       width: 100%;
