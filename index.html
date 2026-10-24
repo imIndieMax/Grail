@@ -24,7 +24,7 @@
       user-select: none;
     }
 
-    /* --- Прелоадер (на весь экран) --- */
+    /* Прелоадер: на весь экран */
     #preloader {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -54,7 +54,7 @@
     }
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    /* --- Меню разработчика --- */
+    /* Меню разработчика */
     #dev-menu {
       position: fixed; bottom: 80px; right: 20px;
       background: rgba(0, 0, 0, 0.85);
@@ -87,7 +87,7 @@
     .dev-btn.danger:hover { color: #ff4444; background: rgba(255,69,69,0.1); }
     .icon-small { width: 16px; height: 16px; fill: currentColor; vertical-align: middle; }
 
-    /* --- Фон и слои --- */
+    /* Фон и слои */
     .video-bg-container { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; overflow: hidden; will-change: transform; }
     video {
       position: absolute;
@@ -266,6 +266,14 @@
     <div class="spinner"></div>
   </div>
 
+  <!-- Скрипт, который убирает прелоадер СРАЗУ (без ожидания событий) -->
+  <script>
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+      preloader.style.display = 'none';
+    }
+  </script>
+
   <!-- Меню разработчика -->
   <div id="dev-menu">
     <button class="dev-btn danger" id="btn-reset-progress" title="Сбросить прогресс">
@@ -317,13 +325,7 @@
   </div>
 
   <script>
-    // --- ГЛАВНОЕ: Убираем прелоадер сразу при загрузке страницы ---
-    const preloader = document.getElementById('preloader');
-    if (preloader) {
-      preloader.style.display = 'none';
-    }
-
-    // --- Инициализация кнопок 1–10 ---
+    // Инициализация кнопок 1–10
     const grid = document.getElementById('grid-niav');
     for (let i = 1; i <= 10; i++) {
       const btn = document.createElement('button');
