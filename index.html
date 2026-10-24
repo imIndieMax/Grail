@@ -24,7 +24,7 @@
       user-select: none;
     }
 
-    /* --- Загрузочный экран (на весь экран) --- */
+    /* --- Прелоадер: на весь экран, гарантированно без щелей --- */
     #preloader {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -87,7 +87,7 @@
     .dev-btn.danger:hover { color: #ff4444; background: rgba(255,69,69,0.1); }
     .icon-small { width: 16px; height: 16px; fill: currentColor; vertical-align: middle; }
 
-    /* --- Основной фон и слои --- */
+    /* --- Фон и слои --- */
     .video-bg-container { position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 1; overflow: hidden; will-change: transform; }
     video {
       position: absolute;
@@ -257,12 +257,10 @@
       text-shadow: 0 1px 2px rgba(0,0,0,0.8);
       white-space: nowrap;
     }
-
-    .loading { color: #cccccc; font-style: italic; }
   </style>
 </head>
 <body>
-  <!-- Прелоадер -->
+  <!-- Прелоадер (исчезнет при загрузке DOM) -->
   <div id="preloader">
     <div class="preloader-text">Проверка обновлений...</div>
     <div class="spinner"></div>
@@ -319,12 +317,18 @@
   </div>
 
   <script>
+    // --- Инициализация кнопок 1–10 ---
+    const grid = document.getElementById('grid-niav');
+    for (let i = 1; i <= 10; i++) {
+      const btn = document.createElement('button');
+      btn.textContent = String(i);
+      btn.onclick = () => showMemory(i);
+      grid.appendChild(btn);
+    }
+
+    // --- Логика экранов ---
     const mainScreen = document.getElementById('main-screen');
     const memoryScreen = document.getElementById('memory-screen');
     const memTitle = document.getElementById('mem-title');
     const memText = document.getElementById('mem-text');
-    const dimLayer = document.getElementById('dimLayer');
-    const bgLayer = document.getElementById('bgLayer');
-    const preloader = document.getElementById('preloader');
-    const devMenu = document.getElementById('dev-menu');
-    const bgVideo = document.getElementById('bg
+    const
