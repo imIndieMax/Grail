@@ -24,7 +24,7 @@
       user-select: none;
     }
 
-    /* --- Прелоадер: на весь экран, гарантированно без щелей --- */
+    /* --- Прелоадер (на весь экран) --- */
     #preloader {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -260,7 +260,7 @@
   </style>
 </head>
 <body>
-  <!-- Прелоадер (исчезнет при загрузке DOM) -->
+  <!-- Прелоадер -->
   <div id="preloader">
     <div class="preloader-text">Проверка обновлений...</div>
     <div class="spinner"></div>
@@ -317,18 +317,14 @@
   </div>
 
   <script>
+    // --- ГЛАВНОЕ: Убираем прелоадер сразу при загрузке страницы ---
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+      preloader.style.display = 'none';
+    }
+
     // --- Инициализация кнопок 1–10 ---
     const grid = document.getElementById('grid-niav');
     for (let i = 1; i <= 10; i++) {
       const btn = document.createElement('button');
       btn.textContent = String(i);
-      btn.onclick = () => showMemory(i);
-      grid.appendChild(btn);
-    }
-
-    // --- Логика экранов ---
-    const mainScreen = document.getElementById('main-screen');
-    const memoryScreen = document.getElementById('memory-screen');
-    const memTitle = document.getElementById('mem-title');
-    const memText = document.getElementById('mem-text');
-    const
