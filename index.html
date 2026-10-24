@@ -11,7 +11,6 @@
       --btn-img: url('https://raw.githubusercontent.com/imIndieMax/Grail/refs/heads/main/Button_Number.png');
       --text-color: #ffffff;
       --section-title-color: #ffffff;
-      --card-bg: #ffffff;
     }
 
     body {
@@ -40,7 +39,6 @@
       z-index: 2;
     }
 
-    /* Убрали max-width: 480px — теперь на ПК будет на всю ширину, но центрировано */
     .app-container {
       position: relative;
       z-index: 3;
@@ -49,12 +47,11 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      align-items: center; /* центрируем по горизонтали */
+      align-items: center;
       box-sizing: border-box;
       padding-bottom: 12px;
     }
 
-    /* Ограничиваем общую ширину только на больших экранах, чтобы не было слишком растянуто */
     @media (min-width: 600px) {
       .app-container {
         max-width: 600px;
@@ -75,8 +72,8 @@
       grid-template-columns: repeat(5, 1fr);
       gap: 6px;
       width: 100%;
-      aspect-ratio: 5 / 2; /* 5 колонок, 2 строки — высота под квадратные кнопки */
-      max-height: 60vh;    /* защита от гигантских кнопок на больших экранах */
+      aspect-ratio: 5 / 2;
+      max-height: 60vh;
     }
 
     button {
@@ -108,18 +105,18 @@
       transform: scale(0.98);
     }
 
-    .screen {
-      display: block;
-    }
+    /* Класс для скрытия элементов */
     .hidden {
-      display: none;
+      display: none !important;
     }
 
+    /* Блок с воспоминанием: прозрачный фон, прокрутка */
     .content-box {
-      background: transparent;
+      background: transparent; /* Полностью прозрачный фон */
       padding: 24px;
       border-radius: 12px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+      /* Тень критически важна для читаемости текста на прозрачном фоне */
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
       text-align: left;
       position: absolute;
       top: 50%;
@@ -127,26 +124,45 @@
       transform: translate(-50%, -50%);
       width: calc(100% - 40px);
       max-width: 400px;
-      background: var(--card-bg);
+      max-height: calc(100vh - 80px);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto; /* Вертикальная прокрутка */
+      z-index: 4;
+      pointer-events: auto; /* Чтобы скролл работал */
+    }
+
+    /* Стили скроллбара */
+    .content-box::-webkit-scrollbar {
+      width: 8px;
+    }
+    .content-box::-webkit-scrollbar-thumb {
+      background: rgba(0,0,0,0.3);
+      border-radius: 4px;
     }
 
     .mem-title {
       font-size: 22px;
-      color: #1a1a1a;
+      color: #ffffff; /* Белый заголовок для контраста на любом фоне */
       margin-bottom: 16px;
       text-align: center;
+      flex-shrink: 0;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.8);
     }
 
     #mem-text {
       line-height: 1.6;
-      color: #222;
+      color: #ffffff; /* Белый текст */
       white-space: pre-wrap;
+      overflow: visible;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.8); /* Тень для букв, чтобы они не сливались с фоном */
     }
 
+    /* Кнопка «Назад»: на всю ширину, высота по тексту */
     .back-btn {
-      margin-top: 24px;
+      margin-top: 16px;
       width: 100%;
-      padding: 14px;
+      padding: 12px 0; /* Высота строго под текст */
       border: none;
       border-radius: 8px;
       font-weight: bold;
@@ -160,10 +176,11 @@
       background-color: transparent;
       
       color: var(--text-color);
-      font-size: 20px;
+      font-size: 18px;
       font-weight: bold;
       
       transition: opacity 0.2s ease, transform 0.1s ease;
+      flex-shrink: 0;
     }
 
     .back-btn:active {
@@ -172,7 +189,7 @@
     }
 
     .loading {
-      color: #666;
+      color: #cccccc;
       font-style: italic;
     }
   </style>
@@ -182,11 +199,14 @@
   <div class="bg-overlay"></div>
 
   <div class="app-container">
+    <!-- Главный экран -->
     <div id="main-screen" class="screen">
       <h2>Ниав</h2>
       <div class="btn-grid" id="grid-niav"></div>
     </div>
 
+    <!-- Экран с воспоминанием (изначально скрыт классом .hidden) -->
+    <!-- Он НЕ виден на главном экране, пока пользователь не нажмет кнопку -->
     <div id="memory-screen" class="hidden content-box">
       <h3 id="mem-title" class="mem-title"></h3>
       <p id="mem-text"></p>
@@ -235,19 +255,31 @@
         memText.className = 'loading';
       }
 
+      // Показываем экран с воспоминанием, скрываем главный
       mainScreen.classList.add('hidden');
       memoryScreen.classList.remove('hidden');
     }
 
     const backBtn = document.getElementById('back-btn');
+    
+    // Функция возврата
+    function goBack() {
+      // Скрываем экран с воспоминанием
+      memoryScreen.classList.add('hidden');
+      // Показываем главный экран
+      mainScreen.classList.remove('hidden');
+      
+      // Сброс скролла вверх (опционально, для удобства)
+      if(memoryScreen.scrollHeight > memoryScreen.clientHeight) {
+         memoryScreen.scrollTop = 0;
+      }
+    }
+
+    // Навешиваем обработчики на кнопку «Назад»
     backBtn.addEventListener('touchstart', goBack, { passive: false });
     backBtn.addEventListener('click', goBack);
 
-    function goBack() {
-      memoryScreen.classList.add('hidden');
-      mainScreen.classList.remove('hidden');
-    }
-
+    // Движение фона по наклону устройства
     let sensitivity = 15;
 
     window.addEventListener('deviceorientation', (event) => {
