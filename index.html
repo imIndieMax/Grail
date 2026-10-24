@@ -41,16 +41,31 @@
       z-index: -1;
     }
 
+    /* Затемнение фона при показе текста */
+    .dim-layer {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.25); /* затемнение ровно на 25% */
+      z-index: 2;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+    .dim-layer.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
     .bg-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
       background: var(--overlay-bg);
-      z-index: 2;
+      z-index: 3;
     }
 
     .app-container {
       position: relative;
-      z-index: 3;
+      z-index: 4;
       width: 100%;
       height: 100vh;
       display: flex;
@@ -76,15 +91,15 @@
       box-sizing: border-box;
     }
 
-    /* Блок кнопок: теперь он абсолютно прижат к низу экрана */
+    /* Контейнер кнопок: отступ снизу 15% высоты экрана */
     .btn-grid-wrapper {
       position: absolute;
-      bottom: 12px;       /* отступ от низа экрана */
+      bottom: 15%;
       left: 50%;
-      transform: translateX(-50%); /* центрирование по горизонтали */
-      width: 85vw;        /* ширина сетки */
-      max-width: 600px;    /* ограничение для больших экранов */
-      z-index: 4;
+      transform: translateX(-50%);
+      width: 85vw;
+      max-width: 600px;
+      z-index: 5;
       padding: 4px;
       box-sizing: border-box;
     }
@@ -94,7 +109,7 @@
       grid-template-columns: repeat(5, 1fr);
       grid-template-rows: 1fr 1fr;
       gap: 10px;
-      aspect-ratio: 5 / 2; /* пропорции под 2 ряда */
+      aspect-ratio: 5 / 2;
       width: 100%;
     }
 
@@ -105,8 +120,8 @@
       opacity: 0.85;
       color: var(--text-color);
       font-family: "Times New Roman", Times, serif;
-      font-size: 52px; /* крупные цифры */
-      font-weight: bold;
+      font-size: 48px; /* уменьшено на 4px относительно 52px */
+      font-weight: normal; /* убрана жирность */
       cursor: pointer;
       touch-action: manipulation;
       transition: opacity 0.2s ease, transform 0.1s ease;
@@ -142,7 +157,7 @@
       display: flex;
       flex-direction: column;
       overflow-y: auto;
-      z-index: 5;
+      z-index: 6;
       pointer-events: auto;
     }
 
@@ -221,13 +236,16 @@
     </video>
   </div>
 
+  <!-- Затемняющий слой (25%) -->
+  <div class="dim-layer" id="dimLayer"></div>
+
   <div class="bg-overlay"></div>
 
   <div class="app-container">
     <!-- Главный экран -->
     <div id="main-screen" class="screen">
       <h2>Ниав</h2>
-      <!-- Блок кнопок теперь позиционируется абсолютно и всегда внизу -->
+      <!-- Контейнер с кнопками: теперь с отступом 15% снизу -->
       <div class="btn-grid-wrapper">
         <div class="btn-grid" id="grid-niav"></div>
       </div>
@@ -250,6 +268,7 @@
     const memoryScreen = document.getElementById('memory-screen');
     const memTitle = document.getElementById('mem-title');
     const memText = document.getElementById('mem-text');
+    const dimLayer = document.getElementById('dimLayer');
     const bgLayer = document.getElementById('bgLayer');
 
     // --- Кнопки 1–10 (функционал без изменений) ---
@@ -292,15 +311,19 @@
         memText.className = 'loading';
       }
 
+      // Показываем экран с текстом и включаем затемнение
       mainScreen.classList.add('hidden');
       memoryScreen.classList.remove('hidden');
+      dimLayer.classList.add('active');
       memoryScreen.scrollTop = 0;
     }
 
     const backBtn = document.getElementById('back-btn');
     function goBack() {
+      // Возвращаем главный экран и убираем затемнение
       memoryScreen.classList.add('hidden');
       mainScreen.classList.remove('hidden');
+      dimLayer.classList.remove('active');
     }
     backBtn.addEventListener('click', goBack);
 
