@@ -80,12 +80,6 @@
       aspect-ratio: 1 / 1;
       padding: 0;
       border: none;
-      border-radius: 6px;
-      
-      background-image: var(--btn-img);
-      background-size: cover;
-      background-position: center;
-      
       opacity: 0.75;
       color: var(--text-color);
       font-size: 42px;
@@ -97,6 +91,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      background-image: var(--btn-img);
+      background-size: cover;
+      background-position: center;
       background-color: transparent;
     }
 
@@ -105,18 +102,18 @@
       transform: scale(0.98);
     }
 
-    /* Класс для скрытия элементов */
+    .screen {
+      display: block;
+    }
+    
     .hidden {
       display: none !important;
     }
 
-    /* Блок с воспоминанием: прозрачный фон, прокрутка */
+    /* Блок с воспоминанием: прозрачный, без рамки и тени, скролл есть */
     .content-box {
-      background: transparent; /* Полностью прозрачный фон */
+      background: transparent;
       padding: 24px;
-      border-radius: 12px;
-      /* Тень критически важна для читаемости текста на прозрачном фоне */
-      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
       text-align: left;
       position: absolute;
       top: 50%;
@@ -127,23 +124,23 @@
       max-height: calc(100vh - 80px);
       display: flex;
       flex-direction: column;
-      overflow-y: auto; /* Вертикальная прокрутка */
+      overflow-y: auto;
       z-index: 4;
-      pointer-events: auto; /* Чтобы скролл работал */
+      pointer-events: auto;
     }
 
-    /* Стили скроллбара */
+    /* Скрываем скроллбар, но оставляем прокрутку */
     .content-box::-webkit-scrollbar {
-      width: 8px;
+      display: none;
     }
-    .content-box::-webkit-scrollbar-thumb {
-      background: rgba(0,0,0,0.3);
-      border-radius: 4px;
+    .content-box {
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
 
     .mem-title {
       font-size: 22px;
-      color: #ffffff; /* Белый заголовок для контраста на любом фоне */
+      color: #ffffff;
       margin-bottom: 16px;
       text-align: center;
       flex-shrink: 0;
@@ -152,19 +149,19 @@
 
     #mem-text {
       line-height: 1.6;
-      color: #ffffff; /* Белый текст */
+      color: #ffffff;
       white-space: pre-wrap;
       overflow: visible;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.8); /* Тень для букв, чтобы они не сливались с фоном */
+      text-shadow: 0 1px 2px rgba(0,0,0,0.8);
     }
 
-    /* Кнопка «Назад»: на всю ширину, высота по тексту */
+    /* Обычная прямоугольная кнопка «Назад»: без скруглений, высота под текст */
     .back-btn {
       margin-top: 16px;
       width: 100%;
-      padding: 12px 0; /* Высота строго под текст */
+      padding: 10px 0; /* Высота строго под текст */
       border: none;
-      border-radius: 8px;
+      border-radius: 0; /* Прямоугольная форма */
       font-weight: bold;
       cursor: pointer;
       touch-action: manipulation;
@@ -205,8 +202,7 @@
       <div class="btn-grid" id="grid-niav"></div>
     </div>
 
-    <!-- Экран с воспоминанием (изначально скрыт классом .hidden) -->
-    <!-- Он НЕ виден на главном экране, пока пользователь не нажмет кнопку -->
+    <!-- Экран с воспоминанием (изначально скрыт) -->
     <div id="memory-screen" class="hidden content-box">
       <h3 id="mem-title" class="mem-title"></h3>
       <p id="mem-text"></p>
@@ -258,28 +254,21 @@
       // Показываем экран с воспоминанием, скрываем главный
       mainScreen.classList.add('hidden');
       memoryScreen.classList.remove('hidden');
+
+      // Гарантированно прокручиваем текст к верху при открытии
+      memoryScreen.scrollTop = 0;
     }
 
     const backBtn = document.getElementById('back-btn');
     
-    // Функция возврата
     function goBack() {
-      // Скрываем экран с воспоминанием
       memoryScreen.classList.add('hidden');
-      // Показываем главный экран
       mainScreen.classList.remove('hidden');
-      
-      // Сброс скролла вверх (опционально, для удобства)
-      if(memoryScreen.scrollHeight > memoryScreen.clientHeight) {
-         memoryScreen.scrollTop = 0;
-      }
     }
 
-    // Навешиваем обработчики на кнопку «Назад»
     backBtn.addEventListener('touchstart', goBack, { passive: false });
     backBtn.addEventListener('click', goBack);
 
-    // Движение фона по наклону устройства
     let sensitivity = 15;
 
     window.addEventListener('deviceorientation', (event) => {
