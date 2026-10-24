@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Эхо прошлого</title>
+  <link rel="stylesheet" href="CSS/style.css" />
+  <style>
+    html {
+      scrollbar-width: none;    /* Firefox */
+      -ms-overflow-style: none; /* IE и старый Edge */
+    }
+    html::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+      width: 0;
+      height: 0;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background-image: url('CSS/MainCover.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
+      color: #e0e0e0;
+      font-family: "Times New Roman", Times, serif;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Затемнение фона на 50% */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 600px;
+      width: 90%;
+      position: relative;
+      z-index: 1;
+      margin: auto; /* центрирует, а при переполнении не режет верх */
+      padding: 20px 0; /* отступ, чтобы контент не прилипал к краям */
+    }
+
+    .group {
+      margin-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="group">
+      <h2>Эхо падения</h2>
+	        <div class="back-trigger" id="back-trigger">
+			<img src="CSS/Button.PNG">
+			<span class="back-label">Червяк</span>
+			</div>
+	        <div class="back-trigger" id="back-trigger">
+			<img src="CSS/Button.PNG">
+			<span class="back-label">Беор</span>
+			</div>
+			<div class="back-trigger" id="back-trigger">
+			<img src="CSS/Button.PNG">
+			<span class="back-label">Айлей</span>
+			</div>
+			<div class="back-trigger" id="back-trigger">
+			<img src="CSS/Button.PNG">
+			<span class="back-label">Арев</span>
+			</div>
+	  <h2>Эхо конца</h2>
+	        <div class="back-trigger" id="back-trigger">
+			<img src="CSS/Button.PNG">
+			<span class="back-label">Мабд</span>
+			</div>
+	        <div class="back-trigger" id="back-trigger">
+			<img src="CSS/Button.PNG">
+			<span class="back-label">Слоан</span>
+			</div>
+			<div class="back-trigger" id="back-trigger">
+			<img src="CSS/Button.PNG">
+			<span class="back-label">Даган</span>
+			</div>
+			<div class="back-trigger" id="back-trigger">
+			<img src="CSS/Button.PNG">
+			<span class="back-label">Фиуль</span>
+			</div>
+	  <h2>Эхо легенд</h2>
+	        <div class="back-trigger" id="back-trigger">
+			<img src="CSS/Button.PNG">
+			<span class="back-label">Келин</span>
+			</div>
+	        <div class="back-trigger" id="back-trigger">
+			<img src="CSS/Button.PNG">
+			<span class="back-label">Дуана</span>
+			</div>
+			<div class="back-trigger" id="back-trigger">
+			<img src="CSS/Button.PNG">
+			<span class="back-label">Назир</span>
+			</div>
+			<div class="back-trigger" id="back-trigger">
+			<img src="CSS/Button.PNG">
+			<span class="back-label">Тебальт</span>
+			</div>
+	  <h2>Эхо вне времени</h2>
+	        <div class="back-trigger" id="back-trigger" onclick="location.href='Characters_Data/Niav/Niav_Index.html';">
+			<img src="CSS/Button.PNG">
+			<span class="back-label">Ниав</span>
+			</div>
+      </div>
+    </div>
+</body>
+</html>
