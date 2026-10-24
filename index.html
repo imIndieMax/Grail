@@ -21,6 +21,45 @@
       position: relative;
     }
 
+    /* --- Загрузочный экран --- */
+    #preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000000;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .preloader-text {
+      color: #D4AF37; /* золотой цвет */
+      font-size: 24px;
+      text-align: center;
+      font-weight: bold;
+      letter-spacing: 1px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(212, 175, 55, 0.3);
+      border-top-color: #D4AF37;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-top: 12px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    /* ------------------------- */
+
     .video-bg-container {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -89,8 +128,8 @@
       text-shadow: 0 1px 2px rgba(0,0,0,0.6);
       width: 100%;
       box-sizing: border-box;
-      font-size: 30px; /* увеличено на 2px от предыдущего 28px */
-      font-weight: normal; /* не жирный */
+      font-size: 30px;
+      font-weight: normal;
     }
 
     /* Контейнер кнопок: отступ снизу 15% высоты экрана */
@@ -119,7 +158,7 @@
       aspect-ratio: 1 / 1;
       padding: 0;
       border: none;
-      opacity: 0.75; /* прозрачность 75% */
+      opacity: 0.75;
       color: var(--text-color);
       font-family: "Times New Roman", Times, serif;
       font-size: 48px;
@@ -179,7 +218,7 @@
     #mem-text {
       line-height: 1.6;
       font-family: "Times New Roman", Times, serif;
-      font-size: 23.25px; /* увеличено примерно на 2px от 21.25px */
+      font-size: 23.25px; /* увеличено примерно на 2px */
       color: #ffffff;
       white-space: pre-wrap;
       overflow: visible;
@@ -225,6 +264,12 @@
   </style>
 </head>
 <body>
+  <!-- Загрузочный экран -->
+  <div id="preloader">
+    <div class="preloader-text">Проверка обновлений...</div>
+    <div class="spinner"></div>
+  </div>
+
   <!-- Фоновое видео -->
   <div class="video-bg-container" id="bgLayer">
     <video id="bgVideo" autoplay muted loop playsinline>
@@ -267,6 +312,7 @@
     const memText = document.getElementById('mem-text');
     const dimLayer = document.getElementById('dimLayer');
     const bgLayer = document.getElementById('bgLayer');
+    const preloader = document.getElementById('preloader');
 
     // --- Кнопки 1–10 ---
     function createGrid(containerId, name) {
@@ -329,6 +375,18 @@
       const moveY = event.beta * (sensitivity / 180);
       bgLayer.style.transform = `translate(${moveX}px, ${moveY}px)`;
     }, { passive: true });
+
+    // Скрываем прелоадер после загрузки DOM
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        preloader.style.opacity = '0';
+        preloader.style.pointerEvents = 'none';
+        // Небольшая задержка, чтобы анимация исчезновения успела проиграться
+        setTimeout(() => {
+          preloader.style.display = 'none';
+        }, 300);
+      }, 800); // можно менять: меньше — быстрее пропадает, больше — дольше висит
+    });
   </script>
 </body>
 </html>
