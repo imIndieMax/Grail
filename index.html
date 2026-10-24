@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Воспоминания</title>
+  <title>Воспоминания: Ниав</title>
   <style>
     :root {
-      --bg-image: url('https://i.pinimg.com/736x/12/31/e4/1231e45c08df402568094e9fee19c1c6.jpg');
-      --overlay-bg: rgba(0, 0, 0, 0.45); /* полупрозрачный чёрный вместо светлого */
-      --btn-color: #3b5998; /* более тёмный синий — лучше видно на пёстром фоне */
+      --bg-image: url('https://raw.githubusercontent.com/imIndieMax/Grail/refs/heads/main/Niav_Main.png');
+      --overlay-bg: rgba(0, 0, 0, 0.45);
+      --btn-color: #3b5998;
       --btn-hover: #2c4372;
-      --text-color: #ffffff; /* белый текст на кнопках */
+      --text-color: #ffffff;
       --card-bg: #ffffff;
       --section-title-color: #ffffff;
     }
@@ -29,7 +29,6 @@
       align-items: center;
     }
 
-    /* Лёгкое затемнение фона, но без pointer-events: none — чтобы не блокировать клики */
     .bg-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -50,7 +49,7 @@
       color: var(--section-title-color);
       text-align: center;
       margin-bottom: 12px;
-      text-shadow: 0 1px 2px rgba(0,0,0,0.6); /* тень для читаемости заголовка */
+      text-shadow: 0 1px 2px rgba(0,0,0,0.6);
     }
 
     .btn-grid {
@@ -61,7 +60,7 @@
 
     button {
       padding: 14px;
-      border: 2px solid rgba(255,255,255,0.3); /* тонкая светлая рамка — сразу видно кнопку */
+      border: 2px solid rgba(255,255,255,0.3);
       border-radius: 8px;
       background-color: var(--btn-color);
       color: var(--text-color);
@@ -74,7 +73,7 @@
 
     button:active {
       background-color: var(--btn-hover);
-      transform: scale(0.98); /* лёгкое уменьшение при нажатии — понятная обратная связь */
+      transform: scale(0.98);
       border-color: rgba(255,255,255,0.6);
     }
 
@@ -129,21 +128,14 @@
   </style>
 </head>
 <body>
-  <!-- Затемнение фона (теперь оно не ломает клики) -->
   <div class="bg-overlay"></div>
 
   <div class="app-container">
 
-    <!-- Главный экран -->
+    <!-- Главный экран: только Ниав -->
     <div id="main-screen" class="screen">
-      <h2>Айлей</h2>
-      <div class="btn-grid" id="grid-ayley"></div>
-
-      <h2 style="margin-top: 30px;">Ниав</h2>
+      <h2>Ниав</h2>
       <div class="btn-grid" id="grid-niav"></div>
-
-      <h2 style="margin-top: 30px;">Червяк</h2>
-      <div class="btn-grid" id="grid-worm"></div>
     </div>
 
     <!-- Экран воспоминания -->
@@ -161,6 +153,7 @@
     const memTitle = document.getElementById('mem-title');
     const memText = document.getElementById('mem-text');
 
+    // Создаём 10 кнопок для Ниав
     function createGrid(containerId, name) {
       const container = document.getElementById(containerId);
       for (let i = 1; i <= 10; i++) {
@@ -172,9 +165,7 @@
       }
     }
 
-    createGrid('grid-ayley', 'Айлей');
     createGrid('grid-niav', 'Ниав');
-    createGrid('grid-worm', 'Червяк');
 
     function handleMemory(name, num) {
       memTitle.textContent = `${name} — Воспоминание ${num}`;
@@ -183,6 +174,7 @@
       mainScreen.classList.add('hidden');
       memoryScreen.classList.remove('hidden');
 
+      // Перезапуск анимации появления текста
       memText.style.animation = 'none';
       void memText.offsetHeight;
       memText.style.animation = null;
