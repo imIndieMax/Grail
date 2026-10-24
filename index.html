@@ -45,34 +45,47 @@
       z-index: 3;
       width: 100%;
       max-width: 480px;
-      padding: 20px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end; /* прижимаем содержимое к низу */
+      align-items: center;       /* центрируем по горизонтали */
       box-sizing: border-box;
+      padding-bottom: 20px;      /* небольшой отступ снизу */
     }
 
     h2 {
       color: var(--section-title-color);
       text-align: center;
-      margin-bottom: 12px;
+      margin-bottom: 16px;
       text-shadow: 0 1px 2px rgba(0,0,0,0.6);
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .btn-grid {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
+      /* 5 колонок равной ширины */
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+      width: 100%;
     }
 
     button {
-      aspect-ratio: 1 / 1;
+      aspect-ratio: 1 / 1; /* квадратная кнопка */
       padding: 0;
       border: none;
-      border-radius: 8px;
+      border-radius: 6px;
+      
+      /* только изображение, без дополнительного фона */
       background-image: var(--btn-img);
       background-size: cover;
       background-position: center;
-      opacity: 0.75;
+      
+      opacity: 0.75; /* прозрачность изображения 75% */
+      
       color: var(--text-color);
-      font-size: 24px;
+      font-size: 22px;
       font-weight: bold;
       cursor: pointer;
       touch-action: manipulation;
@@ -102,6 +115,8 @@
       border-radius: 12px;
       box-shadow: 0 4px 16px rgba(0,0,0,0.25);
       text-align: center;
+      width: 100%;
+      max-width: 400px;
     }
 
     .mem-title {
