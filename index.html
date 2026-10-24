@@ -8,7 +8,7 @@
     :root {
       --bg-image: url('https://raw.githubusercontent.com/imIndieMax/Grail/refs/heads/main/Niav_Main.png');
       --overlay-bg: rgba(0, 0, 0, 0.45);
-      --btn-bg: url('https://raw.githubusercontent.com/imIndieMax/Grail/refs/heads/main/Button_Number.png');
+      --btn-img: url('https://raw.githubusercontent.com/imIndieMax/Grail/refs/heads/main/Button_Number.png');
       --text-color: #ffffff;
       --section-title-color: #ffffff;
       --card-bg: #ffffff;
@@ -58,23 +58,30 @@
 
     .btn-grid {
       display: grid;
+      /* 2 колонки по 1fr — кнопки будут квадратными за счёт aspect-ratio */
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
     }
 
     button {
-      padding: 14px;
+      aspect-ratio: 1 / 1; /* делает кнопку квадратной */
+      padding: 0;
       border: none;
       border-radius: 8px;
-      background-image: var(--btn-bg);
+      
+      /* фон — только картинка, без заливки */
+      background-image: var(--btn-img);
       background-size: cover;
       background-position: center;
+      
+      opacity: 0.75; /* прозрачность изображения 75% */
+      
       color: var(--text-color);
-      font-size: 20px;
+      font-size: 24px;
       font-weight: bold;
       cursor: pointer;
       touch-action: manipulation;
-      transition: filter 0.2s ease;
+      transition: opacity 0.2s ease, transform 0.1s ease;
       user-select: none;
       display: flex;
       align-items: center;
@@ -82,7 +89,8 @@
     }
 
     button:active {
-      filter: brightness(0.85);
+      opacity: 0.6;
+      transform: scale(0.98);
     }
 
     .screen {
