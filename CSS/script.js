@@ -6,7 +6,7 @@ const dimLayer = document.getElementById('dimLayer');
 
 // Словарь персонажей: латинское имя (для имени файла) -> отображаемое имя
 const CHARACTERS = {
-	Cherv: 'Червь',
+	Cherv: 'Червяк',
 	Beor: 'Беор',
 	Ayley: 'Айлей',
 	Niav: 'Ниав',
@@ -79,7 +79,7 @@ function initPage() {
   }
 
   document.title = `Воспоминания ${display}`;
-  document.getElementById('char-heading').textContent = `Воспоминания ${display}`;
+  document.getElementById('char-heading').textContent = `Выберите воспоминание ${display}`;
 
   createGrid('char-grid', key, display);
 }
