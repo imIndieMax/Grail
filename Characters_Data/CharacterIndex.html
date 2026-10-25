@@ -4,6 +4,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Воспоминания</title>
+
+  <!-- ВСТРОЕННЫЕ СТИЛИ: то же самое можно перенести в style.css, но так точно сработает -->
+  <style>
+    /* 1. Чёрный фон вместо белого */
+    html, body {
+      margin: 0;
+      background: #000;
+    }
+
+    /* 2. Контейнер с видео тоже чёрный */
+    .video-bg-container {
+      background: #000;
+    }
+
+    /* 3. Видео скрыто, пока не загрузилось */
+    #bgVideo {
+      opacity: 0;
+      transition: opacity 0.8s ease; /* плавное появление */
+    }
+
+    #bgVideo.loaded {
+      opacity: 1;
+    }
+  </style>
+
   <link rel="stylesheet" href="../CSS/style.css" />
 </head>
 <body>
@@ -15,16 +40,14 @@
 
   <div class="dim-layer" id="dimLayer"></div>
 
-	<div class="bg-bottom">
-	  <img src="../CSS/BackgroundDown.png" alt="">
-	</div>
-
+  <div class="bg-bottom">
+    <img src="../CSS/BackgroundDown.png" alt="">
+  </div>
 
   <div class="app-container">
     <div id="main-screen" class="screen">
       <div class="btn-grid-wrapper">
         <h2 id="char-heading">Воспоминание</h2>
-        <!-- Один универсальный грид -->
         <div class="btn-grid" id="char-grid"></div>
       </div>
     </div>
@@ -40,5 +63,27 @@
   </div>
 
   <script src="../CSS/script.js"></script>
+
+  <!-- ВСТРОЕННЫЙ СКРИПТ: показывает видео только когда оно загрузилось -->
+  <script>
+    (function () {
+      const video = document.getElementById('bgVideo');
+
+      function showVideo() {
+        video.classList.add('loaded');
+        // если браузер не начал воспроизведение сам — запускаем принудительно
+        if (video.paused) {
+          video.play().catch(function () { /* тихо игнорируем */ });
+        }
+      }
+
+      video.addEventListener('loadeddata', showVideo);
+
+      // подстраховка: если событие уже случилось раньше, чем мы повесили обработчик
+      if (video.readyState >= 2) {
+        showVideo();
+      }
+    })();
+  </script>
 </body>
 </html>
