@@ -22,25 +22,31 @@
     body {
       margin: 0;
       padding: 0;
-      background-color: #000000;
-      background-image: url('CSS/MainCover.jpg');
-      background-size: cover;
-      background-position: center;
-      background-attachment: fixed;
-      background-repeat: no-repeat;
+      background-color: #000000; /* чёрный, пока видео не загрузилось */
       color: #e0e0e0;
       font-family: "Times New Roman", Times, serif;
       overflow: hidden;
       min-height: 100vh;
     }
 
+    /* Фоновое видео */
+    .bg-video {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;       /* растягиваем как background-size: cover */
+      z-index: -2;
+      pointer-events: none;    /* чтобы не перехватывало клики */
+    }
+
     /* Затемнение фона на 50% */
-    body::before {
-      content: "";
+    .bg-overlay {
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.5);
-      z-index: 0;
+      z-index: -1;
+      pointer-events: none;
     }
 
     .scroll-area {
@@ -92,10 +98,10 @@
       display: block;
       text-decoration: none;
       color: #dcdcdc;
-      font-weight: normal;
+      font-weight: bold;
       font-size: 24px;
       text-shadow: 0 4px 4px rgba(0, 0, 0, 0.75);
-      transition: color 0.2s ease, text-shadow 0.2s ease;
+      transition: color 0.5s ease, text-shadow 0.2s ease;
       position: relative;
     }
 
@@ -106,6 +112,14 @@
   </style>
 </head>
 <body>
+  <!-- Фоновое видео -->
+  <video class="bg-video" autoplay muted loop playsinline>
+    <source src="CSS/MainCover_Animation.mp4" type="video/mp4" />
+  </video>
+
+  <!-- Затемнение поверх видео -->
+  <div class="bg-overlay"></div>
+
   <div class="scroll-area">
     <div class="container">
       <div class="group">
