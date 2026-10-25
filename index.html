@@ -3,15 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Важно: задаёт цвет системной панели на мобильных -->
+  <meta name="theme-color" content="#000000" />
+
   <title>Эхо прошлого</title>
   <link rel="stylesheet" href="CSS/style.css" />
   <style>
     html {
-      scrollbar-width: none;    /* Firefox */
-      -ms-overflow-style: none; /* IE и старый Edge */
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
     html::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Opera */
+      display: none;
       width: 0;
       height: 0;
     }
@@ -19,6 +22,8 @@
     body {
       margin: 0;
       padding: 0;
+      /* Сначала сплошной чёрный фон, потом поверх него картинка */
+      background-color: #000000;
       background-image: url('CSS/MainCover.jpg');
       background-size: cover;
       background-position: center;
@@ -47,8 +52,8 @@
       width: 90%;
       position: relative;
       z-index: 1;
-      margin: auto; /* центрирует, а при переполнении не режет верх */
-      padding: 20px 0; /* отступ, чтобы контент не прилипал к краям */
+      margin: auto;
+      padding: 20px 0;
     }
 
     .group {
@@ -60,62 +65,65 @@
   <div class="container">
     <div class="group">
       <h2>Эхо падения</h2>
-	        <div class="back-trigger" id="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Cherv';">
-			<img src="CSS/Button.png">
-			<span class="back-label">Червяк</span>
-			</div>
-	        <div class="back-trigger" id="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Beor';">
-			<img src="CSS/Button.png">
-			<span class="back-label">Беор</span>
-			</div>
-			<div class="back-trigger" id="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Ayley';">
-			<img src="CSS/Button.png">
-			<span class="back-label">Айлей</span>
-			</div>
-			<div class="back-trigger" id="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Arev';">
-			<img src="CSS/Button.png">
-			<span class="back-label">Арев</span>
-			</div>
-	  <h2>Эхо конца</h2>
-	        <div class="back-trigger" id="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Mabd';">
-			<img src="CSS/Button.png">
-			<span class="back-label">Мабд</span>
-			</div>
-	        <div class="back-trigger" id="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Sloan';">
-			<img src="CSS/Button.png">
-			<span class="back-label">Слоан</span>
-			</div>
-			<div class="back-trigger" id="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Dagan';">
-			<img src="CSS/Button.png">
-			<span class="back-label">Даган</span>
-			</div>
-			<div class="back-trigger" id="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Fiul';">
-			<img src="CSS/Button.png">
-			<span class="back-label">Фиуль</span>
-			</div>
-	  <h2>Эхо легенд</h2>
-	        <div class="back-trigger" id="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Kelin';">
-			<img src="CSS/Button.png">
-			<span class="back-label">Келин</span>
-			</div>
-	        <div class="back-trigger" id="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Duana';">
-			<img src="CSS/Button.png">
-			<span class="back-label">Дуана</span>
-			</div>
-			<div class="back-trigger" id="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Nazir';">
-			<img src="CSS/Button.png">
-			<span class="back-label">Назир</span>
-			</div>
-			<div class="back-trigger" id="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Tebalt';">
-			<img src="CSS/Button.png">
-			<span class="back-label">Тебальт</span>
-			</div>
-	  <h2>Эхо вне времени</h2>
-	        <div class="back-trigger" id="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Niav';">
-			<img src="CSS/Button.png">
-			<span class="back-label">Ниав</span>
-			</div>
-      </div>
+        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Cherv';">
+          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
+          <span class="back-label">Червяк</span>
+        </div>
+        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Beor';">
+          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
+          <span class="back-label">Беор</span>
+        </div>
+        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Ayley';">
+          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
+          <span class="back-label">Айлей</span>
+        </div>
+        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Arev';">
+          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
+          <span class="back-label">Арев</span>
+        </div>
+
+      <h2>Эхо конца</h2>
+        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Mabd';">
+          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
+          <span class="back-label">Мабд</span>
+        </div>
+        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Sloan';">
+          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
+          <span class="back-label">Слоан</span>
+        </div>
+        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Dagan';">
+          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
+          <span class="back-label">Даган</span>
+        </div>
+        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Fiul';">
+          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
+          <span class="back-label">Фиуль</span>
+        </div>
+
+      <h2>Эхо легенд</h2>
+        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Kelin';">
+          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
+          <span class="back-label">Келин</span>
+        </div>
+        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Duana';">
+          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
+          <span class="back-label">Дуана</span>
+        </div>
+        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Nazir';">
+          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
+          <span class="back-label">Назир</span>
+        </div>
+        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Tebalt';">
+          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
+          <span class="back-label">Тебальт</span>
+        </div>
+
+      <h2>Эхо вне времени</h2>
+        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Niav';">
+          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
+          <span class="back-label">Ниав</span>
+        </div>
     </div>
+  </div>
 </body>
 </html>
