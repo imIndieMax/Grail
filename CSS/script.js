@@ -46,7 +46,7 @@ async function handleMemory(nameLatin, nameDisplay, num) {
   memTitle.textContent = `${nameDisplay} — Воспоминание ${num}`;
   memText.textContent = 'Загрузка...';
 
-  const url = `https://raw.githubusercontent.com/imIndieMax/Grail/main/Characters_Data/${nameLatin}/${nameLatin}_${num}.txt`;
+  const url = `https://raw.githubusercontent.com/imIndieMax/Grail/main/Characters_Data/${nameLatin}/Memory_${num}.txt`;
 
   try {
     const response = await fetch(url);
@@ -56,7 +56,7 @@ async function handleMemory(nameLatin, nameDisplay, num) {
     memText.textContent = await response.text();
   } catch (error) {
     console.error(error);
-    memText.textContent = 'Не удалось загрузить текст. Проверьте наличие файла.';
+    memText.textContent = 'Не удалось загрузить текст. Проверьте наличие файла. ${url}';
   }
 
   mainScreen.classList.add('hidden');
