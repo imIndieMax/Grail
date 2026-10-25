@@ -96,20 +96,20 @@ h2 {
   font-size: 30px;
   font-weight: bold;
   */
-      font-size: 32px;
-      margin-bottom: 20px;
+      font-size: 32px; 
+      /*margin-bottom: 20px;*/
       text-transform: uppercase;
 	  text-align: center;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
       font-weight: bold;
       color: #D4AF37;
-      text-shadow: 0 2px 4px rgba(255, 255, 255, 0.4); /* лёгкое свечение */
+      text-shadow: 0 4px 8px rgba(255, 255, 255, 0.4); /* лёгкое свечение */
       line-height: 1.2;
 }
 
 .btn-grid-wrapper {
   position: absolute;
-  bottom: 7%;	/*высота от нижнего края контейнера с кнопками 1-10*/
+  bottom: 5%;	/*высота от нижнего края контейнера с кнопками 1-10*/
   left: 50%;
   transform: translateX(-50%);
   width: 85vw;
@@ -159,9 +159,10 @@ button {
   padding: 0;
   border: none;
   color: #fff;               /* белый текст */
+  opacity: 0.85;
   font-family: inherit;
   font-size: 48px;
-  font-weight: bold;
+  font-weight: normal;
   cursor: pointer;
   touch-action: manipulation;
   transition: opacity 0.2s ease, transform 0.1s ease;
