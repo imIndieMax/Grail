@@ -60,7 +60,7 @@ async function handleMemory(nameLatin, nameDisplay, num) {
   memTitle.textContent = `${nameDisplay} — Воспоминание ${num}`;
   memText.textContent = 'Загрузка...';
 
-  const url = `{nameLatin}/Memory_${num}.txt`;
+  const url = `../Characters_Data/{nameLatin}/Memory_${num}.txt`;
 
   try {
     const response = await fetch(url);
@@ -70,7 +70,7 @@ async function handleMemory(nameLatin, nameDisplay, num) {
     memText.textContent = await response.text();
   } catch (error) {
     console.error(error);
-    memText.textContent = 'Не удалось загрузить текст. Проверь наличие файла. ${url}';
+    memText.textContent = ('Не удалось загрузить текст. Проверь наличие файла. ${url}');
   }
 
   mainScreen.classList.add('hidden');
