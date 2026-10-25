@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Важно: задаёт цвет системной панели на мобильных -->
+  <!-- Цвет статус-бара на iPhone -->
   <meta name="theme-color" content="#000000" />
 
   <title>Эхо прошлого</title>
-  <link rel="stylesheet" href="CSS/style.css" />
+
   <style>
     html {
       scrollbar-width: none;
@@ -22,7 +22,6 @@
     body {
       margin: 0;
       padding: 0;
-      /* Сначала сплошной чёрный фон, потом поверх него картинка */
       background-color: #000000;
       background-image: url('CSS/MainCover.jpg');
       background-size: cover;
@@ -31,10 +30,8 @@
       background-repeat: no-repeat;
       color: #e0e0e0;
       font-family: "Times New Roman", Times, serif;
-      display: flex;
-      justify-content: center;
+      overflow: hidden;
       min-height: 100vh;
-      position: relative;
     }
 
     /* Затемнение фона на 50% */
@@ -43,86 +40,86 @@
       position: fixed;
       inset: 0;
       background: rgba(0, 0, 0, 0.5);
-      z-index: -1;
+      z-index: 0;
+    }
+
+    .scroll-area {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      overflow-y: auto;
+      z-index: 1;
+      padding: 40px 20px;
+      box-sizing: border-box;
     }
 
     .container {
       text-align: center;
       max-width: 600px;
       width: 90%;
-      position: relative;
-      z-index: 1;
       margin: auto;
-      padding: 20px 0;
     }
 
     .group {
       margin-bottom: 40px;
     }
+
+    h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      font-weight: bold;
+      color: #D4AF37;
+      text-shadow: 0 2px 4px rgba(255, 255, 255, 0.4); /* лёгкое свечение */
+      line-height: 1.2;
+    }
+
+    .back-trigger {
+      margin: 20px 0;
+      cursor: pointer;
+      display: block;
+      text-decoration: none;
+      color: #dcdcdc;
+      font-weight: bold;
+      font-size: 24px;
+      transition: color 0.2s ease, text-shadow 0.2s ease;
+      position: relative;
+    }
+
+    .back-trigger:hover {
+      color: #ffd700;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.6);
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="group">
-      <h2>Эхо падения</h2>
-        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Cherv';">
-          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
-          <span class="back-label">Червяк</span>
-        </div>
-        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Beor';">
-          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
-          <span class="back-label">Беор</span>
-        </div>
-        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Ayley';">
-          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
-          <span class="back-label">Айлей</span>
-        </div>
-        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Arev';">
-          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
-          <span class="back-label">Арев</span>
-        </div>
+  <div class="scroll-area">
+    <div class="container">
+      <div class="group">
+        <h2>Эхо падения</h2>
+        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Cherv">Червяк</a>
+        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Beor">Беор</a>
+        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Ayley">Айлей</a>
+        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Arev">Арев</a>
 
-      <h2>Эхо конца</h2>
-        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Mabd';">
-          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
-          <span class="back-label">Мабд</span>
-        </div>
-        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Sloan';">
-          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
-          <span class="back-label">Слоан</span>
-        </div>
-        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Dagan';">
-          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
-          <span class="back-label">Даган</span>
-        </div>
-        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Fiul';">
-          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
-          <span class="back-label">Фиуль</span>
-        </div>
+        <h2>Эхо конца</h2>
+        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Mabd">Мабд</a>
+        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Sloan">Слоан</a>
+        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Dagan">Даган</a>
+        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Fiul">Фиуль</a>
 
-      <h2>Эхо легенд</h2>
-        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Kelin';">
-          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
-          <span class="back-label">Келин</span>
-        </div>
-        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Duana';">
-          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
-          <span class="back-label">Дуана</span>
-        </div>
-        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Nazir';">
-          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
-          <span class="back-label">Назир</span>
-        </div>
-        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Tebalt';">
-          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
-          <span class="back-label">Тебальт</span>
-        </div>
+        <h2>Эхо легенд</h2>
+        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Kelin">Келин</a>
+        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Duana">Дуана</a>
+        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Nazir">Назир</a>
+        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Tebalt">Тебальт</a>
 
-      <h2>Эхо вне времени</h2>
-        <div class="back-trigger" onclick="location.href='Characters_Data/CharacterIndex.html?char=Niav';">
-          <img src="CSS/Button.png" alt="" style="display:block; margin:0 auto;">
-          <span class="back-label">Ниав</span>
-        </div>
+        <h2>Эхо вне времени</h2>
+        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Niav">Ниав</a>
+      </div>
     </div>
   </div>
 </body>
