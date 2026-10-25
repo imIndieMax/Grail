@@ -32,28 +32,55 @@ function createGrid(containerId, nameLatin, nameDisplay) {
   }
 }
 
+// Если видео недоступно — показываем картинку-обложку
+function showCoverFallback(coverUrl) {
+  const bgLayer = document.getElementById('bgLayer');
+  const bgVideo = document.getElementById('bgVideo');
+  if (!bgLayer || !bgVideo) return;
+
+  // Прячем видео, чтобы не мелькал пустой фон
+  bgVideo.style.display = 'none';
+
+  // Создаём (или обновляем) картинку внутри того же контейнера
+  let cover = document.getElementById('bgCover');
+  if (!cover) {
+    cover = document.createElement('img');
+    cover.id = 'bgCover';
+    cover.style.width = '100%';
+    cover.style.height = '100%';
+    cover.style.objectFit = 'cover';
+    bgLayer.appendChild(cover);
+  }
+  cover.src = coverUrl;
+}
+
 function initPage() {
   const key = getCharacterKey();
   const display = CHARACTERS[key];
 
   if (!display) {
-    // Незнакомый (или пустой) параметр — показываем аккуратное сообщение
     document.getElementById('char-heading').textContent = 'Персонаж не найден';
     return;
   }
 
-  // Динамическая подстановка видео по персонажу
+  const bgVideo = document.getElementById('bgVideo');
   const bgSource = document.getElementById('bgSource');
-  if (bgSource) {
-    bgSource.src = `${key}/Animation.mp4`; // путь к видео в папке персонажа
-    document.getElementById('bgVideo').load(); // перезагружаем видео с новым источником
+
+  if (bgVideo && bgSource) {
+    const videoUrl = `${key}/Animation.mp4`;
+
+    // Обработчик ошибки: если видео не загрузилось — включаем cover.png
+    bgVideo.addEventListener('error', () => showCoverFallback(`${key}/cover.png`), { once: true });
+    // Ошибка может прилететь и на <source>, слушаем и там
+    bgSource.addEventListener('error', () => showCoverFallback(`${key}/cover.png`), { once: true });
+
+    bgSource.src = videoUrl;
+    bgVideo.load();
   }
 
-  // Подставляем имя в заголовок вкладки и в h2
   document.title = `Воспоминания ${display}`;
   document.getElementById('char-heading').textContent = `Воспоминания ${display}`;
 
-  // Создаём грид для нужного персонажа
   createGrid('char-grid', key, display);
 }
 
@@ -77,7 +104,7 @@ async function handleMemory(nameLatin, nameDisplay, num) {
     memText.textContent = await response.text();
   } catch (error) {
     console.error(error);
-    memText.textContent = ('Не удалось загрузить текст. Проверь наличие файла. ${url}');
+    memText.textContent = `Не удалось загрузить текст. Проверь наличие файла: ${url}`;
   }
 
   mainScreen.classList.add('hidden');
