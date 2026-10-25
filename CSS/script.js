@@ -70,7 +70,7 @@ async function handleMemory(nameLatin, nameDisplay, num) {
     memText.textContent = await response.text();
   } catch (error) {
     console.error(error);
-    memText.textContent = 'Не удалось загрузить текст. Проверь наличие файла.';
+    memText.textContent = 'Не удалось загрузить текст. Проверь наличие файла. ${url}';
   }
 
   mainScreen.classList.add('hidden');
