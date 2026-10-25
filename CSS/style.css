@@ -150,18 +150,18 @@ button:active {
 
 .mem-title {
   font-family: inherit;
-  font-size: 27.5px;
+  font-size: 28px;
   color: var(--text-color);
-  margin-bottom: 30px; /* расстояние между заголовком и текстом — 30px */
+  margin-bottom: 50px; /* расстояние между заголовком и текстом */
   text-align: center;
   flex-shrink: 0;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
 #mem-text {
-  line-height: 0.8; /* межстрочное расстояние уменьшено на 50% */
+  line-height: 1,2; /* межстрочное расстояние */
   font-family: inherit;
-  font-size: 23.25px;
+  font-size: 24px;
   color: var(--text-color);
   white-space: pre-wrap;
   overflow: visible;
