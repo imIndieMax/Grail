@@ -86,7 +86,7 @@ video {
 }
 
 h2 {
-  /*color: var(--text-color);*/
+	/*
   color: #D4AF37;
   text-align: center;
   margin-bottom: 8px;
@@ -95,15 +95,25 @@ h2 {
   box-sizing: border-box;
   font-size: 30px;
   font-weight: bold;
+  */
+      font-size: 60px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+	  text-align: center;
+      letter-spacing: 3px;
+      font-weight: bold;
+      color: #D4AF37;
+      text-shadow: 0 2px 4px rgba(255, 255, 255, 0.4); /* лёгкое свечение */
+      line-height: 1.2;
 }
 
 .btn-grid-wrapper {
   position: absolute;
-  bottom: 15%;
+  bottom: 7%;	/*высота от нижнего края контейнера с кнопками 1-10*/
   left: 50%;
   transform: translateX(-50%);
   width: 85vw;
-  max-width: 600px;
+  max-width: 1000px;
   z-index: 5;
   padding: 4px;
   box-sizing: border-box;
