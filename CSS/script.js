@@ -42,6 +42,13 @@ function initPage() {
     return;
   }
 
+  // Динамическая подстановка видео по персонажу
+  const bgSource = document.getElementById('bgSource');
+  if (bgSource) {
+    bgSource.src = `${key}/Animation.mp4`; // путь к видео в папке персонажа
+    document.getElementById('bgVideo').load(); // перезагружаем видео с новым источником
+  }
+
   // Подставляем имя в заголовок вкладки и в h2
   document.title = `Воспоминания ${display}`;
   document.getElementById('char-heading').textContent = `Воспоминания ${display}`;
