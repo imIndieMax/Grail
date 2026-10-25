@@ -79,7 +79,7 @@ function initPage() {
   }
 
   document.title = `Воспоминания ${display}`;
-  document.getElementById('char-heading').textContent = `Выберите воспоминание ${display}`;
+  document.getElementById('char-heading').textContent = `Воспоминания ${display}`;
 
   createGrid('char-grid', key, display);
 }
