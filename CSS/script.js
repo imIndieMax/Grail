@@ -60,7 +60,7 @@ async function handleMemory(nameLatin, nameDisplay, num) {
   memTitle.textContent = `${nameDisplay} — Воспоминание ${num}`;
   memText.textContent = 'Загрузка...';
 
-  const url = `../Characters_Data/{nameLatin}/Memory_${num}.txt`;
+  const url = `../Characters_Data/${nameLatin}/Memory_${num}.txt`;
 
   try {
     const response = await fetch(url);
