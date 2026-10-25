@@ -57,7 +57,7 @@
 
     .container {
       text-align: center;
-      max-width: 600px;
+      max-width: 300px;
       width: 90%;
       margin: auto;
     }
@@ -77,6 +77,15 @@
       line-height: 1.2;
     }
 
+    /* Сетка: два столбца, две строки */
+    .link-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      row-gap: 0px;
+      justify-items: center;
+    }
+
     .back-trigger {
       margin: 20px 0;
       cursor: pointer;
@@ -85,6 +94,7 @@
       color: #dcdcdc;
       font-weight: bold;
       font-size: 24px;
+      text-shadow: 0 2px 2px rgba(0, 0, 0, 0.75);
       transition: color 0.2s ease, text-shadow 0.2s ease;
       position: relative;
     }
@@ -100,22 +110,28 @@
     <div class="container">
       <div class="group">
         <h2>Эхо падения</h2>
-        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Cherv">Червяк</a>
-        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Beor">Беор</a>
-        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Ayley">Айлей</a>
-        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Arev">Арев</a>
+        <div class="link-grid">
+          <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Cherv">Червяк</a>
+          <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Beor">Беор</a>
+          <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Ayley">Айлей</a>
+          <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Arev">Арев</a>
+        </div>
 
         <h2>Эхо конца</h2>
-        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Mabd">Мабд</a>
-        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Sloan">Слоан</a>
-        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Dagan">Даган</a>
-        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Fiul">Фиуль</a>
+        <div class="link-grid">
+          <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Mabd">Мабд</a>
+          <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Sloan">Слоан</a>
+          <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Dagan">Даган</a>
+          <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Fiul">Фиуль</a>
+        </div>
 
         <h2>Эхо легенд</h2>
-        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Kelin">Келин</a>
-        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Duana">Дуана</a>
-        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Nazir">Назир</a>
-        <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Tebalt">Тебальт</a>
+        <div class="link-grid">
+          <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Kelin">Келин</a>
+          <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Duana">Дуана</a>
+          <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Nazir">Назир</a>
+          <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Tebalt">Тебальт</a>
+        </div>
 
         <h2>Эхо вне времени</h2>
         <a class="back-trigger" href="Characters_Data/CharacterIndex.html?char=Niav">Ниав</a>
