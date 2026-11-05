@@ -4,13 +4,13 @@ const memTitle = document.getElementById('mem-title');
 const memText = document.getElementById('mem-text');
 const dimLayer = document.getElementById('dimLayer');
 
-// Словарь персонажей: латинское имя (для имени файла) -> отображаемое имя
+// Список персонажей
 const CHARACTERS = {
 	Cherv: 'Червяк',
 	Beor: 'Беор',
 	Ayley: 'Айлей',
 	Niav: 'Ниав',
-  // добавляй новых персонажей сюда — одной строкой
+	Arev: 'Арев',
 };
 
 // Читаем параметр char из адресной строки: ?char=Niav
